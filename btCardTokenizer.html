@@ -1,0 +1,1359 @@
+
+<!-- saved from url=(0053)https://testistore.gcrta.org/OA_HTML/ptcPmdOption.jsp -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Payment Tokenization</title>
+
+<!--script src="https://js.braintreegateway.com/web/3.40.0/js/hosted-fields.min.js"></script-->
+
+  <!-- Load PayPal's checkout.js Library. -->
+<script src="https://www.paypalobjects.com/api/checkout.js" data-version-4 log-level="warn"></script>
+<!-- Load the client component. -->
+<script src="https://js.braintreegateway.com/web/3.40.0/js/client.min.js"></script>
+<!-- Load the PayPal Checkout component. -->
+<script src="https://js.braintreegateway.com/web/3.40.0/js/paypal-checkout.min.js"></script>
+<!-- Load the Bank account. -->
+<script src="https://js.braintreegateway.com/web/3.40.0/js/us-bank-account.min.js"></script>
+
+<script>
+!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var t;((t="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this).braintree||(t.braintree={})).hostedFields=e()}}(function(){return function o(s,a,c){function l(t,e){if(!a[t]){if(!s[t]){var n="function"==typeof require&&require;if(!e&&n)return n(t,!0);if(u)return u(t,!0);var r=new Error("Cannot find module '"+t+"'");throw r.code="MODULE_NOT_FOUND",r}var i=a[t]={exports:{}};s[t][0].call(i.exports,function(e){return l(s[t][1][e]||e)},i,i.exports,o,s,a,c)}return a[t].exports}for(var u="function"==typeof require&&require,e=0;e<c.length;e++)l(c[e]);return l}({1:[function(n,r,e){(function(e){"use strict";var t=n("promise-polyfill");r.exports=e.Promise||t}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"promise-polyfill":23}],2:[function(e,t,n){"use strict";var s=e("./lib/promise"),a={};function r(n){var t,r,i,e,o=JSON.stringify(n);return!n.forceScriptReload&&(e=a[o])?e:(i=document.createElement("script"),t=n.dataAttributes||{},r=n.container||document.head,i.src=n.src,i.id=n.id,i.async=!0,Object.keys(t).forEach(function(e){i.setAttribute("data-"+e,t[e])}),e=new s(function(e,t){i.addEventListener("load",function(){e(i)}),i.addEventListener("error",function(){t(new Error(n.src+" failed to load."))}),i.addEventListener("abort",function(){t(new Error(n.src+" has aborted."))}),r.appendChild(i)}),a[o]=e)}r.clearCache=function(){a={}},t.exports=r},{"./lib/promise":1}],3:[function(e,n,t){(function(t){"use strict";n.exports=function(e){return e=e||t.navigator.userAgent,/Android/.test(e)}}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{}],4:[function(e,t,n){"use strict";var r=e("./is-edge"),i=e("./is-samsung");t.exports=function(e){return!(-1===(e=e||navigator.userAgent).indexOf("Chrome")&&-1===e.indexOf("CriOS")||r(e)||i(e))}},{"./is-edge":5,"./is-samsung":11}],5:[function(e,t,n){"use strict";t.exports=function(e){return-1!==(e=e||navigator.userAgent).indexOf("Edge/")}},{}],6:[function(e,r,t){(function(t){"use strict";var n=e("./is-ie11");r.exports=function(e){return-1!==(e=e||t.navigator.userAgent).indexOf("MSIE")||n(e)}}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"./is-ie11":7}],7:[function(e,t,n){"use strict";t.exports=function(e){return-1!==(e=e||navigator.userAgent).indexOf("Trident/7")}},{}],8:[function(e,t,n){"use strict";t.exports=function(e){return-1!==(e=e||navigator.userAgent).indexOf("MSIE 9")}},{}],9:[function(e,r,t){(function(t){"use strict";var n=e("./is-ios");r.exports=function(e){return e=e||t.navigator.userAgent,!!n(e)&&(!!/\bGSA\b/.test(e)||/.+AppleWebKit(?!.*Safari)/.test(e))}}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"./is-ios":10}],10:[function(e,n,t){(function(t){"use strict";n.exports=function(e){return e=e||t.navigator.userAgent,/iPhone|iPod|iPad/i.test(e)}}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{}],11:[function(e,n,t){(function(t){"use strict";n.exports=function(e){return e=e||t.navigator.userAgent,/SamsungBrowser/i.test(e)}}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{}],12:[function(e,t,n){"use strict";function r(e){return e.className.trim().split(/\s+/)}function i(e){var t=Array.prototype.slice.call(arguments,1),n=r(e).filter(function(e){return-1===t.indexOf(e)}).concat(t).join(" ");e.className=n}function o(e){var t=Array.prototype.slice.call(arguments,1),n=r(e).filter(function(e){return-1===t.indexOf(e)}).join(" ");e.className=n}t.exports={add:i,remove:o,toggle:function(e,t,n){n?i(e,t):o(e,t)}}},{}],13:[function(e,t,n){"use strict";var r=e("./lib/set-attributes"),i=e("./lib/default-attributes"),o=e("./lib/assign");t.exports=function(e){var t=document.createElement("iframe"),n=o({},i,e);return n.style&&"string"!=typeof n.style&&(o(t.style,n.style),delete n.style),r(t,n),t.getAttribute("id")||(t.id=t.name),t}},{"./lib/assign":14,"./lib/default-attributes":15,"./lib/set-attributes":16}],14:[function(e,t,n){"use strict";t.exports=function(n){return Array.prototype.slice.call(arguments,1).forEach(function(t){"object"==typeof t&&Object.keys(t).forEach(function(e){n[e]=t[e]})}),n}},{}],15:[function(e,t,n){"use strict";t.exports={src:"about:blank",frameBorder:0,allowtransparency:!0,scrolling:"no"}},{}],16:[function(e,t,n){"use strict";t.exports=function(e,t){var n;for(var r in t)t.hasOwnProperty(r)&&(null==(n=t[r])?e.removeAttribute(r):e.setAttribute(r,n))}},{}],17:[function(e,t,n){"use strict";t.exports=function(t){return function(){var e=arguments;setTimeout(function(){t.apply(null,e)},1)}}},{}],18:[function(e,t,n){"use strict";t.exports=function(e){var t=!1;return function(){t||(t=!0,e.apply(null,arguments))}}},{}],19:[function(e,t,n){"use strict";t.exports=function(e,t){if(!t)return e;e.then(function(e){t(null,e)}).catch(function(e){t(e)})}},{}],20:[function(e,t,n){"use strict";var r=e("./lib/deferred"),i=e("./lib/once"),o=e("./lib/promise-or-callback");function a(n){return function(){var e,t=Array.prototype.slice.call(arguments);return"function"==typeof t[t.length-1]&&(e=t.pop(),e=i(r(e))),o(n.apply(this,t),e)}}a.wrapPrototype=function(i,e){var o,s;return o=(e=e||{}).ignoreMethods||[],s=!0===e.transformPrivateMethods,Object.getOwnPropertyNames(i.prototype).filter(function(e){var t,n="constructor"!==e&&"function"==typeof i.prototype[e],r=-1===o.indexOf(e);return t=!!s||"_"!==e.charAt(0),n&&t&&r}).forEach(function(e){var t=i.prototype[e];i.prototype[e]=a(t)}),i},t.exports=a},{"./lib/deferred":17,"./lib/once":18,"./lib/promise-or-callback":19}],21:[function(e,t,n){"use strict";var i,o={},s={},r="visa",a="mastercard",c="american-express",l="diners-club",u="discover",d="elo",f="jcb",p="unionpay",E="maestro",_="mir",h=[r,a,c,l,u,f,p,E,d,_];function y(e){return e?JSON.parse(JSON.stringify(e)):null}function I(e){return s[e]||o[e]}function m(n){var e,t,r=[];return"string"==typeof(t=n)||t instanceof String?0===n.length?i.map(function(e){return y(I(e))}):(i.forEach(function(e){var t=I(e);!function(e,t,n){var r,i,o,s;for(r=0;r<t.patterns.length;r++)if(i=t.patterns[r],T(e,i)){s=y(t),o=Array.isArray(i)?String(i[0]).length:String(i).length,e.length>=o&&(s.matchStrength=o),n.push(s);break}}(n,t,r)}),(e=function(e){var t,n;if(0<(n=(t=e).filter(function(e){return e.matchStrength}).length)&&n===t.length)return e.reduce(function(e,t){return e?e.matchStrength<t.matchStrength?t:e:t})}(r))?[e]:r):[]}function T(e,t){return Array.isArray(t)?(n=e,r=t[0],i=t[1],o=String(r).length,s=n.substr(0,o),a=parseInt(s,10),r=parseInt(String(r).substr(0,s.length),10),i=parseInt(String(i).substr(0,s.length),10),r<=a&&a<=i):(c=e,l=t,(l=String(l)).substring(0,c.length)===c.substring(0,l.length));var n,r,i,o,s,a,c,l}function b(e,t){var n=i.indexOf(e);if(!t&&-1===n)throw new Error('"'+e+'" is not a supported card type.');return n}i=y(h),o[r]={niceType:"Visa",type:r,patterns:[4],gaps:[4,8,12],lengths:[16,18,19],code:{name:"CVV",size:3}},o[a]={niceType:"Mastercard",type:a,patterns:[[51,55],[2221,2229],[223,229],[23,26],[270,271],2720],gaps:[4,8,12],lengths:[16],code:{name:"CVC",size:3}},o[c]={niceType:"American Express",type:c,patterns:[34,37],gaps:[4,10],lengths:[15],code:{name:"CID",size:4}},o[l]={niceType:"Diners Club",type:l,patterns:[[300,305],36,38,39],gaps:[4,10],lengths:[14,16,19],code:{name:"CVV",size:3}},o[u]={niceType:"Discover",type:u,patterns:[6011,[644,649],65],gaps:[4,8,12],lengths:[16,19],code:{name:"CID",size:3}},o.jcb={niceType:"JCB",type:f,patterns:[2131,1800,[3528,3589]],gaps:[4,8,12],lengths:[16,17,18,19],code:{name:"CVV",size:3}},o[p]={niceType:"UnionPay",type:p,patterns:[620,[624,626],[62100,62182],[62184,62187],[62185,62197],[62200,62205],[622010,622999],622018,[622019,622999],[62207,62209],[622126,622925],[623,626],6270,6272,6276,[627700,627779],[627781,627799],[6282,6289],6291,6292],gaps:[4,8,12],lengths:[16,17,18,19],code:{name:"CVN",size:3}},o[E]={niceType:"Maestro",type:E,patterns:[493698,[5e5,506698],[506779,508999],[56,59],63,67,6],gaps:[4,8,12],lengths:[12,13,14,15,16,17,18,19],code:{name:"CVC",size:3}},o.elo={niceType:"Elo",type:d,patterns:[401178,401179,438935,457631,457632,431274,451416,457393,504175,[506699,506778],[509e3,509999],627780,636297,636368,[650031,650033],[650035,650051],[650405,650439],[650485,650538],[650541,650598],[650700,650718],[650720,650727],[650901,650978],[651652,651679],[655e3,655019],[655021,655058]],gaps:[4,8,12],lengths:[16],code:{name:"CVE",size:3}},o.mir={niceType:"Mir",type:_,patterns:[[2200,2204]],gaps:[4,8,12],lengths:[16,17,18,19],code:{name:"CVP2",size:3}},m.getTypeInfo=function(e){return y(I(e))},m.removeCard=function(e){var t=b(e);i.splice(t,1)},m.addCard=function(e){var t=b(e.type,!0);s[e.type]=e,-1===t&&i.push(e.type)},m.updateCard=function(e,t){var n,r=s[e]||o[e];if(!r)throw new Error('"'+e+'" is not a recognized type. Use `addCard` instead.');if(t.type&&r.type!==t.type)throw new Error("Cannot overwrite type parameter.");n=y(r),Object.keys(n).forEach(function(e){t[e]&&(n[e]=t[e])}),s[n.type]=n},m.changeOrder=function(e,t){var n=b(e);i.splice(n,1),i.splice(t,0,e)},m.resetModifications=function(){i=y(h),s={}},m.types={VISA:r,MASTERCARD:a,AMERICAN_EXPRESS:c,DINERS_CLUB:l,DISCOVER:u,JCB:f,UNIONPAY:p,MAESTRO:E,ELO:d,MIR:_},t.exports=m},{}],22:[function(e,T,t){(function(t){"use strict";var r,s,o=[],a={},c="/*framebus*/";function e(e){var t,n=l(this);return!u(e)&&(!u(n)&&(!1!==(t=d(e,Array.prototype.slice.call(arguments,1),n))&&(y(r.top||r.self,t,n),!0)))}function n(e,t){var n=l(this);return!m(e,t,n)&&(a[n]=a[n]||{},a[n][e]=a[n][e]||[],a[n][e].push(t),!0)}function i(e,t){var n,r,i=l(this);if(m(e,t,i))return!1;if(!(r=a[i]&&a[i][e]))return!1;for(n=0;n<r.length;n++)if(r[n]===t)return r.splice(n,1),!0;return!1}function l(e){return e&&e._origin||"*"}function u(e){return"string"!=typeof e}function d(e,t,n){var r=!1,i={event:e,origin:n},o=t[t.length-1];"function"==typeof o&&(i.reply=I(o,n),t=t.slice(0,-1)),i.args=t;try{r=c+JSON.stringify(i)}catch(e){throw new Error("Could not stringify event: "+e.message)}return r}function f(e){var t,n,r,i;if(e.data.slice(0,c.length)!==c)return!1;try{t=JSON.parse(e.data.slice(c.length))}catch(e){return!1}return null!=t.reply&&(n=e.origin,r=e.source,i=t.reply,t.reply=function(e){var t;return!!r&&(!1!==(t=d(i,[e],n))&&void r.postMessage(t,n))},t.args.push(t.reply)),t}function p(e){r||((r=e||t).addEventListener?r.addEventListener("message",_,!1):r.attachEvent?r.attachEvent("onmessage",_):null===r.onmessage?r.onmessage=_:r=null)}function E(){return"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,function(e){var t=16*Math.random()|0;return("x"===e?t:3&t|8).toString(16)})}function _(e){var t;u(e.data)||(t=f(e))&&(h("*",t.event,t.args,e),h(e.origin,t.event,t.args,e),function(e,t,n){var r,i;for(r=o.length-1;0<=r;r--)!0===(i=o[r]).closed?o=o.slice(r,1):n!==i&&y(i.top,e,t)}(e.data,t.origin,e.source))}function h(e,t,n,r){var i;if(a[e]&&a[e][t])for(i=0;i<a[e][t].length;i++)a[e][t][i].apply(r,n)}function y(e,t,n){var r,i,o=0;try{for(e.postMessage(t,n),(i=e).top===i&&null!=i.opener&&i.opener!==i&&!0!==i.opener.closed&&y(e.opener.top,t,n);r=e.frames[o];)y(r,t,n),o++}catch(e){}}function I(r,i){var o=E();return s.target(i).subscribe(o,function e(t,n){r(t,n),s.target(i).unsubscribe(o,e)}),o}function m(e,t,n){return!!u(e)||("function"!=typeof t||!!u(n))}p(),s={target:function(e){var t,n={};for(t in s)s.hasOwnProperty(t)&&(n[t]=s[t]);return n._origin=e||"*",n},_packagePayload:d,_unpackPayload:f,_attach:p,_detach:function(){null!=r&&(r.removeEventListener?r.removeEventListener("message",_,!1):r.detachEvent?r.detachEvent("onmessage",_):r.onmessage===_&&(r.onmessage=null),r=null,o=[],a={})},_dispatch:h,_broadcast:y,_subscribeReplier:I,_subscriptionArgsInvalid:m,_onmessage:_,_uuid:E,_getSubscribers:function(){return a},_win:function(){return r},include:function(e){return null!=e&&null!=e.Window&&e.constructor===e.Window&&(o.push(e),!0)},publish:e,pub:e,trigger:e,emit:e,subscribe:n,sub:n,on:n,unsubscribe:i,unsub:i,off:i},T.exports=s}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{}],23:[function(e,t,n){"use strict";var r=setTimeout;function i(){}function o(e){if(!(this instanceof o))throw new TypeError("Promises must be constructed via new");if("function"!=typeof e)throw new TypeError("not a function");this._state=0,this._handled=!1,this._value=void 0,this._deferreds=[],d(e,this)}function s(n,r){for(;3===n._state;)n=n._value;0!==n._state?(n._handled=!0,o._immediateFn(function(){var e=1===n._state?r.onFulfilled:r.onRejected;if(null!==e){var t;try{t=e(n._value)}catch(e){return void c(r.promise,e)}a(r.promise,t)}else(1===n._state?a:c)(r.promise,n._value)})):n._deferreds.push(r)}function a(t,e){try{if(e===t)throw new TypeError("A promise cannot be resolved with itself.");if(e&&("object"==typeof e||"function"==typeof e)){var n=e.then;if(e instanceof o)return t._state=3,t._value=e,void l(t);if("function"==typeof n)return void d((r=n,i=e,function(){r.apply(i,arguments)}),t)}t._state=1,t._value=e,l(t)}catch(e){c(t,e)}var r,i}function c(e,t){e._state=2,e._value=t,l(e)}function l(e){2===e._state&&0===e._deferreds.length&&o._immediateFn(function(){e._handled||o._unhandledRejectionFn(e._value)});for(var t=0,n=e._deferreds.length;t<n;t++)s(e,e._deferreds[t]);e._deferreds=null}function u(e,t,n){this.onFulfilled="function"==typeof e?e:null,this.onRejected="function"==typeof t?t:null,this.promise=n}function d(e,t){var n=!1;try{e(function(e){n||(n=!0,a(t,e))},function(e){n||(n=!0,c(t,e))})}catch(e){if(n)return;n=!0,c(t,e)}}o.prototype.catch=function(e){return this.then(null,e)},o.prototype.then=function(e,t){var n=new this.constructor(i);return s(this,new u(e,t,n)),n},o.prototype.finally=function(t){var n=this.constructor;return this.then(function(e){return n.resolve(t()).then(function(){return e})},function(e){return n.resolve(t()).then(function(){return n.reject(e)})})},o.all=function(t){return new o(function(r,i){if(!t||void 0===t.length)throw new TypeError("Promise.all accepts an array");var o=Array.prototype.slice.call(t);if(0===o.length)return r([]);var s=o.length;function a(t,e){try{if(e&&("object"==typeof e||"function"==typeof e)){var n=e.then;if("function"==typeof n)return void n.call(e,function(e){a(t,e)},i)}o[t]=e,0==--s&&r(o)}catch(e){i(e)}}for(var e=0;e<o.length;e++)a(e,o[e])})},o.resolve=function(t){return t&&"object"==typeof t&&t.constructor===o?t:new o(function(e){e(t)})},o.reject=function(n){return new o(function(e,t){t(n)})},o.race=function(i){return new o(function(e,t){for(var n=0,r=i.length;n<r;n++)i[n].then(e,t)})},o._immediateFn="function"==typeof setImmediate&&function(e){setImmediate(e)}||function(e){r(e,0)},o._unhandledRejectionFn=function(e){"undefined"!=typeof console&&console&&console.warn("Possible Unhandled Promise Rejection:",e)},t.exports=o},{}],24:[function(a,c,e){(function(e){"use strict";var n=e.navigator&&e.navigator.userAgent,r=a("@braintree/browser-detection/is-android"),i=a("@braintree/browser-detection/is-chrome"),t=a("@braintree/browser-detection/is-ios"),o=a("@braintree/browser-detection/is-ie9"),s=/Version\/\d\.\d* Chrome\/\d*\.0\.0\.0/;c.exports={isIE9:o,isAndroidChrome:function(e){var t=e||n;return r(t)&&i(t)},isIos:t,isKitKatWebview:function(e){var t=e||n;return r(t)&&s.test(t)},isSamsungBrowser:function(e){return/SamsungBrowser/.test(e=e||n)||!i(t=e)&&-1<t.indexOf("Samsung");var t}}}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"@braintree/browser-detection/is-android":3,"@braintree/browser-detection/is-chrome":4,"@braintree/browser-detection/is-ie9":8,"@braintree/browser-detection/is-ios":10}],25:[function(e,t,n){"use strict";var r=e("./lib/device");t.exports=function(){return!r.isSamsungBrowser()}},{"./lib/device":24}],26:[function(e,t,n){"use strict";var o=e("../../lib/braintree-error"),s=e("../shared/errors"),a=e("../shared/constants").allowedAttributes;t.exports=function(e,t){var n;return a.hasOwnProperty(e)?null==t||(r=e,i=t,"string"===a[r]?"string"==typeof i||"number"==typeof i:"boolean"===a[r]&&("true"===String(i)||"false"===String(i)))||(n=new o({type:s.HOSTED_FIELDS_ATTRIBUTE_VALUE_NOT_ALLOWED.type,code:s.HOSTED_FIELDS_ATTRIBUTE_VALUE_NOT_ALLOWED.code,message:'Value "'+t+'" is not allowed for "'+e+'" attribute.'})):n=new o({type:s.HOSTED_FIELDS_ATTRIBUTE_NOT_SUPPORTED.type,code:s.HOSTED_FIELDS_ATTRIBUTE_NOT_SUPPORTED.code,message:'The "'+e+'" attribute is not supported in Hosted Fields.'}),n;var r,i}},{"../../lib/braintree-error":43,"../shared/constants":33,"../shared/errors":34}],27:[function(e,t,n){"use strict";var r=e("../shared/constants"),i=e("../../lib/use-min");t.exports=function(e,t,n){return e+"/web/"+r.VERSION+"/html/hosted-fields-frame"+i(n)+".html#"+t}},{"../../lib/use-min":61,"../shared/constants":33}],28:[function(e,t,n){(function(i){"use strict";var o=e("../shared/constants").allowedStyles;t.exports=function(e){var n,t=document.createElement("input"),r={};return"."===e[0]&&(e=e.substring(1)),t.className=e,t.style.display="none !important",t.style.position="fixed !important",t.style.left="-99999px !important",t.style.top="-99999px !important",i.document.body.appendChild(t),n=i.getComputedStyle(t),o.forEach(function(e){var t=n[e];t&&(r[e]=t)}),i.document.body.removeChild(t),r}}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"../shared/constants":33}],29:[function(e,t,n){"use strict";var f=e("../../lib/assign").assign,p=e("../../lib/create-assets-url"),E=e("../../lib/destructor"),_=e("@braintree/class-list"),h=e("@braintree/iframer"),y=e("../../lib/bus"),I=e("../../lib/create-deferred-client"),m=e("../../lib/braintree-error"),T=e("./compose-url"),b=e("./get-styles-from-class"),g=e("../shared/constants"),D=e("../shared/errors"),S=e("../../lib/constants").INTEGRATION_TIMEOUT_MS,O=e("../../lib/vendor/uuid"),a=e("../shared/find-parent-tags"),v=e("../shared/browser-detection"),L=g.events,A=e("../../lib/event-emitter"),N=e("./inject-frame"),w=e("../../lib/analytics"),r=g.allowedFields,F=e("../../lib/methods"),R=e("../../lib/convert-methods-to-error"),x=e("../../lib/errors"),C=e("../shared/get-card-types"),i=e("./attribute-validation-error"),P=e("../../lib/promise"),o=e("@braintree/wrap-promise");function U(o){return function(e){var t,n=e.merchantPayload,r=n.emittedBy,i=o[r].containerElement;Object.keys(n.fields).forEach(function(e){n.fields[e].container=o[e].containerElement}),t=n.fields[r],"blur"===e.type&&function(e){var t;if(!v.isIos())return;document.activeElement===document.body&&((t=e.querySelector("input"))||((t=document.createElement("input")).type="button",t.style.height="0px",t.style.width="0px",t.style.opacity="0",t.style.padding="0px",t.style.position="absolute",t.style.left="-200%",t.style.top="0px",e.insertBefore(t,e.firstChild)),t.focus(),t.blur())}(i),_.toggle(i,g.externalClasses.FOCUSED,t.isFocused),_.toggle(i,g.externalClasses.VALID,t.isValid),_.toggle(i,g.externalClasses.INVALID,!t.isPotentiallyValid),this._state={cards:n.cards,fields:n.fields},this._emit(e.type,n)}}function H(o){var n,e,t,r,s,i=this,a={},c=f({},o),l={},u=[],d=O();if(o.client?(t=(e=o.client.getConfiguration()).gatewayConfiguration.assetsUrl,r=e.isDebug):(t=p.create(o.authorization),r=Boolean(o.isDebug)),this._clientPromise=I.create({client:o.client,authorization:o.authorization,debug:r,assetsUrl:t,name:"Hosted Fields"}),s=T(t,d,r),!o.fields||0===Object.keys(o.fields).length)throw new m({type:x.INSTANTIATION_OPTION_REQUIRED.type,code:x.INSTANTIATION_OPTION_REQUIRED.code,message:"options.fields is required when instantiating Hosted Fields."});A.call(this),this._injectedNodes=[],this._destructor=new E,this._fields=a,this._state={fields:{},cards:C("")},this._bus=new y({channel:d,merchantUrl:location.href}),this._destructor.registerFunctionForTeardown(function(){i._bus.teardown()}),w.sendEvent(this._clientPromise,"custom.hosted-fields.initialized"),Object.keys(o.fields).forEach(function(t){var e,n,r,i;if(!g.allowedFields.hasOwnProperty(t))throw new m({type:D.HOSTED_FIELDS_INVALID_FIELD_KEY.type,code:D.HOSTED_FIELDS_INVALID_FIELD_KEY.code,message:'"'+t+'" is not a valid field.'});if(e=o.fields[t],!(n=document.querySelector(e.selector)))throw new m({type:D.HOSTED_FIELDS_INVALID_FIELD_SELECTOR.type,code:D.HOSTED_FIELDS_INVALID_FIELD_SELECTOR.code,message:D.HOSTED_FIELDS_INVALID_FIELD_SELECTOR.message,details:{fieldSelector:e.selector,fieldKey:t}});if(n.querySelector('iframe[name^="braintree-"]'))throw new m({type:D.HOSTED_FIELDS_FIELD_DUPLICATE_IFRAME.type,code:D.HOSTED_FIELDS_FIELD_DUPLICATE_IFRAME.code,message:D.HOSTED_FIELDS_FIELD_DUPLICATE_IFRAME.message,details:{fieldSelector:e.selector,fieldKey:t}});if(e.maxlength&&"number"!=typeof e.maxlength)throw new m({type:D.HOSTED_FIELDS_FIELD_PROPERTY_INVALID.type,code:D.HOSTED_FIELDS_FIELD_PROPERTY_INVALID.code,message:"The value for maxlength must be a number.",details:{fieldKey:t}});if(e.minlength&&"number"!=typeof e.minlength)throw new m({type:D.HOSTED_FIELDS_FIELD_PROPERTY_INVALID.type,code:D.HOSTED_FIELDS_FIELD_PROPERTY_INVALID.code,message:"The value for minlength must be a number.",details:{fieldKey:t}});r=h({type:t,name:"braintree-hosted-field-"+t,style:g.defaultIFrameStyle,title:"Secure Credit Card Frame - "+g.allowedFields[t].label}),this._injectedNodes.push.apply(this._injectedNodes,N(r,n)),this._setupLabelFocus(t,n),a[t]={frameElement:r,containerElement:n},i=new P(function(e){l[t]=e}),u.push(i),this._state.fields[t]={isEmpty:!0,isValid:!1,isPotentiallyValid:!0,isFocused:!1,container:n},setTimeout(function(){v.isIE()||v.isEdge()?(r.src="about:blank",setTimeout(function(){r.src=s},0)):r.src=s},0)}.bind(this)),c.styles&&Object.keys(c.styles).forEach(function(e){var t=c.styles[e];"string"==typeof t&&(c.styles[e]=b(t))}),this._bus.on(L.READY_FOR_CLIENT,function(t){i._clientPromise.then(function(e){t(e)})}),n=setTimeout(function(){w.sendEvent(i._clientPromise,"custom.hosted-fields.load.timed-out"),i._emit("timeout")},S),P.all(u).then(function(e){var t=e[0];clearTimeout(n),t(c),i._emit("ready")}),this._bus.on(L.FRAME_READY,function(e,t){l[e.field](t)}),this._bus.on(L.INPUT_EVENT,U(a).bind(this)),this._destructor.registerFunctionForTeardown(function(){var e,t,n;for(e=0;e<i._injectedNodes.length;e++)(n=(t=i._injectedNodes[e]).parentNode).removeChild(t),_.remove(n,g.externalClasses.FOCUSED,g.externalClasses.INVALID,g.externalClasses.VALID)}),this._destructor.registerFunctionForTeardown(function(){var e=F(H.prototype).concat(F(A.prototype));R(i,e)})}(H.prototype=Object.create(A.prototype,{constructor:H}))._setupLabelFocus=function(e,t){var n,r,i=v.isIos(),o=this._bus;if(!i&&null!=t.id){for(n=(n=Array.prototype.slice.call(document.querySelectorAll('label[for="'+t.id+'"]'))).concat(a(t,"label")),r=0;r<n.length;r++)n[r].addEventListener("click",s,!1);this._destructor.registerFunctionForTeardown(function(){for(r=0;r<n.length;r++)n[r].removeEventListener("click",s,!1)})}function s(){o.emit(L.TRIGGER_INPUT_FOCUS,e)}},H.prototype._attachInvalidFieldContainersToError=function(t){t.details&&t.details.invalidFieldKeys&&0<t.details.invalidFieldKeys.length&&(t.details.invalidFields={},t.details.invalidFieldKeys.forEach(function(e){t.details.invalidFields[e]=this._fields[e].containerElement}.bind(this)))},H.prototype.teardown=function(){var r=this;return new P(function(t,n){r._destructor.teardown(function(e){w.sendEvent(r._clientPromise,"custom.hosted-fields.teardown-completed"),e?n(e):t()})})},H.prototype.tokenize=function(e){var o=this;return e||(e={}),new P(function(r,i){o._bus.emit(L.TOKENIZATION_REQUEST,e,function(e){var t=e[0],n=e[1];t?(o._attachInvalidFieldContainersToError(t),i(new m(t))):r(n)})})},H.prototype.addClass=function(e,t){var n;return r.hasOwnProperty(e)?this._fields.hasOwnProperty(e)?this._bus.emit(L.ADD_CLASS,e,t):n=new m({type:D.HOSTED_FIELDS_FIELD_NOT_PRESENT.type,code:D.HOSTED_FIELDS_FIELD_NOT_PRESENT.code,message:'Cannot add class to "'+e+'" field because it is not part of the current Hosted Fields options.'}):n=new m({type:D.HOSTED_FIELDS_FIELD_INVALID.type,code:D.HOSTED_FIELDS_FIELD_INVALID.code,message:'"'+e+'" is not a valid field. You must use a valid field option when adding a class.'}),n?P.reject(n):P.resolve()},H.prototype.removeClass=function(e,t){var n;return r.hasOwnProperty(e)?this._fields.hasOwnProperty(e)?this._bus.emit(L.REMOVE_CLASS,e,t):n=new m({type:D.HOSTED_FIELDS_FIELD_NOT_PRESENT.type,code:D.HOSTED_FIELDS_FIELD_NOT_PRESENT.code,message:'Cannot remove class from "'+e+'" field because it is not part of the current Hosted Fields options.'}):n=new m({type:D.HOSTED_FIELDS_FIELD_INVALID.type,code:D.HOSTED_FIELDS_FIELD_INVALID.code,message:'"'+e+'" is not a valid field. You must use a valid field option when removing a class.'}),n?P.reject(n):P.resolve()},H.prototype.setAttribute=function(e){var t,n;return r.hasOwnProperty(e.field)?this._fields.hasOwnProperty(e.field)?(t=i(e.attribute,e.value))?n=t:this._bus.emit(L.SET_ATTRIBUTE,e.field,e.attribute,e.value):n=new m({type:D.HOSTED_FIELDS_FIELD_NOT_PRESENT.type,code:D.HOSTED_FIELDS_FIELD_NOT_PRESENT.code,message:'Cannot set attribute for "'+e.field+'" field because it is not part of the current Hosted Fields options.'}):n=new m({type:D.HOSTED_FIELDS_FIELD_INVALID.type,code:D.HOSTED_FIELDS_FIELD_INVALID.code,message:'"'+e.field+'" is not a valid field. You must use a valid field option when setting an attribute.'}),n?P.reject(n):P.resolve()},H.prototype.setMessage=function(e){this._bus.emit(L.SET_MESSAGE,e.field,e.message)},H.prototype.removeAttribute=function(e){var t,n;return r.hasOwnProperty(e.field)?this._fields.hasOwnProperty(e.field)?(t=i(e.attribute))?n=t:this._bus.emit(L.REMOVE_ATTRIBUTE,e.field,e.attribute):n=new m({type:D.HOSTED_FIELDS_FIELD_NOT_PRESENT.type,code:D.HOSTED_FIELDS_FIELD_NOT_PRESENT.code,message:'Cannot remove attribute for "'+e.field+'" field because it is not part of the current Hosted Fields options.'}):n=new m({type:D.HOSTED_FIELDS_FIELD_INVALID.type,code:D.HOSTED_FIELDS_FIELD_INVALID.code,message:'"'+e.field+'" is not a valid field. You must use a valid field option when removing an attribute.'}),n?P.reject(n):P.resolve()},H.prototype.setPlaceholder=function(e,t){return this.setAttribute({field:e,attribute:"placeholder",value:t})},H.prototype.clear=function(e){var t;return r.hasOwnProperty(e)?this._fields.hasOwnProperty(e)?this._bus.emit(L.CLEAR_FIELD,e):t=new m({type:D.HOSTED_FIELDS_FIELD_NOT_PRESENT.type,code:D.HOSTED_FIELDS_FIELD_NOT_PRESENT.code,message:'Cannot clear "'+e+'" field because it is not part of the current Hosted Fields options.'}):t=new m({type:D.HOSTED_FIELDS_FIELD_INVALID.type,code:D.HOSTED_FIELDS_FIELD_INVALID.code,message:'"'+e+'" is not a valid field. You must use a valid field option when clearing a field.'}),t?P.reject(t):P.resolve()},H.prototype.focus=function(e){var t;return r.hasOwnProperty(e)?this._fields.hasOwnProperty(e)?this._bus.emit(L.TRIGGER_INPUT_FOCUS,e):t=new m({type:D.HOSTED_FIELDS_FIELD_NOT_PRESENT.type,code:D.HOSTED_FIELDS_FIELD_NOT_PRESENT.code,message:'Cannot focus "'+e+'" field because it is not part of the current Hosted Fields options.'}):t=new m({type:D.HOSTED_FIELDS_FIELD_INVALID.type,code:D.HOSTED_FIELDS_FIELD_INVALID.code,message:'"'+e+'" is not a valid field. You must use a valid field option when focusing a field.'}),t?P.reject(t):P.resolve()},H.prototype.getState=function(){return this._state},t.exports=o.wrapPrototype(H)},{"../../lib/analytics":38,"../../lib/assign":40,"../../lib/braintree-error":43,"../../lib/bus":46,"../../lib/constants":47,"../../lib/convert-methods-to-error":48,"../../lib/create-assets-url":49,"../../lib/create-deferred-client":51,"../../lib/destructor":52,"../../lib/errors":54,"../../lib/event-emitter":55,"../../lib/methods":58,"../../lib/promise":60,"../../lib/vendor/uuid":63,"../shared/browser-detection":32,"../shared/constants":33,"../shared/errors":34,"../shared/find-parent-tags":35,"../shared/get-card-types":36,"./attribute-validation-error":26,"./compose-url":27,"./get-styles-from-class":28,"./inject-frame":30,"@braintree/class-list":12,"@braintree/iframer":13,"@braintree/wrap-promise":20}],30:[function(e,t,n){"use strict";t.exports=function(e,t){var n=document.createElement("div"),r=document.createDocumentFragment();return n.style.clear="both",r.appendChild(e),r.appendChild(n),t.appendChild(r),[e,n]}},{}],31:[function(e,t,n){"use strict";var r=e("./external/hosted-fields"),i=e("../lib/basic-component-verification"),o=e("./shared/errors"),s=e("restricted-input/supports-input-formatting"),a=e("@braintree/wrap-promise"),c=e("../lib/braintree-error"),l=e("../lib/promise");t.exports={supportsInputFormatting:s,create:a(function(e){return i.verify({name:"Hosted Fields",authorization:e.authorization,client:e.client}).then(function(){var n=new r(e);return new l(function(e,t){n.on("ready",function(){e(n)}),n.on("timeout",function(){t(new c(o.HOSTED_FIELDS_TIMEOUT))})})})}),VERSION:"3.40.0"}},{"../lib/basic-component-verification":41,"../lib/braintree-error":43,"../lib/promise":60,"./external/hosted-fields":29,"./shared/errors":34,"@braintree/wrap-promise":20,"restricted-input/supports-input-formatting":25}],32:[function(e,t,n){"use strict";t.exports={isIE:e("@braintree/browser-detection/is-ie"),isEdge:e("@braintree/browser-detection/is-edge"),isIe9:e("@braintree/browser-detection/is-ie9"),isIos:e("@braintree/browser-detection/is-ios"),isIosWebview:e("@braintree/browser-detection/is-ios-webview")}},{"@braintree/browser-detection/is-edge":5,"@braintree/browser-detection/is-ie":6,"@braintree/browser-detection/is-ie9":8,"@braintree/browser-detection/is-ios":10,"@braintree/browser-detection/is-ios-webview":9}],33:[function(e,t,n){"use strict";var r=e("../../lib/enumerate"),i=e("./errors"),o={VERSION:"3.40.0",maxExpirationYearAge:19,externalEvents:{FOCUS:"focus",BLUR:"blur",EMPTY:"empty",NOT_EMPTY:"notEmpty",VALIDITY_CHANGE:"validityChange",CARD_TYPE_CHANGE:"cardTypeChange"},defaultMaxLengths:{number:19,postalCode:8,expirationDate:7,expirationMonth:2,expirationYear:4,cvv:3},externalClasses:{FOCUSED:"braintree-hosted-fields-focused",INVALID:"braintree-hosted-fields-invalid",VALID:"braintree-hosted-fields-valid"},defaultIFrameStyle:{border:"1px solid #D0D0D0",padding:"6px",width:"150px",height:"14px",float:"left"},tokenizationErrorCodes:{81724:i.HOSTED_FIELDS_TOKENIZATION_FAIL_ON_DUPLICATE,81736:i.HOSTED_FIELDS_TOKENIZATION_CVV_VERIFICATION_FAILED},allowedStyles:["-moz-appearance","-moz-osx-font-smoothing","-moz-tap-highlight-color","-moz-transition","-webkit-appearance","-webkit-font-smoothing","-webkit-tap-highlight-color","-webkit-transition","appearance","color","direction","font","font-family","font-size","font-size-adjust","font-stretch","font-style","font-variant","font-variant-alternates","font-variant-caps","font-variant-east-asian","font-variant-ligatures","font-variant-numeric","font-weight","letter-spacing","line-height","padding","border","opacity","outline","text-shadow","transition"],allowedFields:{number:{name:"credit-card-number",label:"Credit Card Number",size:"150px"},cvv:{name:"cvv",label:"CVV"},expirationDate:{name:"expiration",label:"Expiration Date"},expirationMonth:{name:"expiration-month",label:"Expiration Month"},expirationYear:{name:"expiration-year",label:"Expiration Year"},postalCode:{name:"postal-code",label:"Postal Code"}},allowedAttributes:{"aria-invalid":"boolean","aria-required":"boolean",disabled:"boolean",placeholder:"string"},autocompleteMappings:{"credit-card-number":"cc-number",expiration:"cc-exp","expiration-month":"cc-exp-month","expiration-year":"cc-exp-year",cvv:"cc-csc","postal-code":"billing postal-code"}};o.events=r(["READY_FOR_CLIENT","FRAME_READY","VALIDATE_STRICT","CONFIGURATION","TOKENIZATION_REQUEST","INPUT_EVENT","TRIGGER_INPUT_FOCUS","ADD_CLASS","REMOVE_CLASS","SET_ATTRIBUTE","REMOVE_ATTRIBUTE","CLEAR_FIELD","AUTOFILL_EXPIRATION_DATE","SET_MESSAGE"],"hosted-fields:"),t.exports=o},{"../../lib/enumerate":53,"./errors":34}],34:[function(e,t,n){"use strict";var r=e("../../lib/braintree-error");t.exports={HOSTED_FIELDS_TIMEOUT:{type:r.types.UNKNOWN,code:"HOSTED_FIELDS_TIMEOUT",message:"Hosted Fields timed out when attempting to set up."},HOSTED_FIELDS_INVALID_FIELD_KEY:{type:r.types.MERCHANT,code:"HOSTED_FIELDS_INVALID_FIELD_KEY"},HOSTED_FIELDS_INVALID_FIELD_SELECTOR:{type:r.types.MERCHANT,code:"HOSTED_FIELDS_INVALID_FIELD_SELECTOR",message:"Selector does not reference a valid DOM node."},HOSTED_FIELDS_FIELD_DUPLICATE_IFRAME:{type:r.types.MERCHANT,code:"HOSTED_FIELDS_FIELD_DUPLICATE_IFRAME",message:"Element already contains a Braintree iframe."},HOSTED_FIELDS_FIELD_INVALID:{type:r.types.MERCHANT,code:"HOSTED_FIELDS_FIELD_INVALID"},HOSTED_FIELDS_FIELD_NOT_PRESENT:{type:r.types.MERCHANT,code:"HOSTED_FIELDS_FIELD_NOT_PRESENT"},HOSTED_FIELDS_TOKENIZATION_NETWORK_ERROR:{type:r.types.NETWORK,code:"HOSTED_FIELDS_TOKENIZATION_NETWORK_ERROR",message:"A tokenization network error occurred."},HOSTED_FIELDS_TOKENIZATION_FAIL_ON_DUPLICATE:{type:r.types.CUSTOMER,code:"HOSTED_FIELDS_TOKENIZATION_FAIL_ON_DUPLICATE",message:"This credit card already exists in the merchant's vault."},HOSTED_FIELDS_TOKENIZATION_CVV_VERIFICATION_FAILED:{type:r.types.CUSTOMER,code:"HOSTED_FIELDS_TOKENIZATION_CVV_VERIFICATION_FAILED",message:"CVV verification failed during tokenization."},HOSTED_FIELDS_FAILED_TOKENIZATION:{type:r.types.CUSTOMER,code:"HOSTED_FIELDS_FAILED_TOKENIZATION",message:"The supplied card data failed tokenization."},HOSTED_FIELDS_FIELDS_EMPTY:{type:r.types.CUSTOMER,code:"HOSTED_FIELDS_FIELDS_EMPTY",message:"All fields are empty. Cannot tokenize empty card fields."},HOSTED_FIELDS_FIELDS_INVALID:{type:r.types.CUSTOMER,code:"HOSTED_FIELDS_FIELDS_INVALID",message:"Some payment input fields are invalid. Cannot tokenize invalid card fields."},HOSTED_FIELDS_ATTRIBUTE_NOT_SUPPORTED:{type:r.types.MERCHANT,code:"HOSTED_FIELDS_ATTRIBUTE_NOT_SUPPORTED"},HOSTED_FIELDS_ATTRIBUTE_VALUE_NOT_ALLOWED:{type:r.types.MERCHANT,code:"HOSTED_FIELDS_ATTRIBUTE_VALUE_NOT_ALLOWED"},HOSTED_FIELDS_FIELD_PROPERTY_INVALID:{type:r.types.MERCHANT,code:"HOSTED_FIELDS_FIELD_PROPERTY_INVALID"}}},{"../../lib/braintree-error":43}],35:[function(e,t,n){"use strict";t.exports=function(e,t){for(var n=e.parentNode,r=[];null!=n;)null!=n.tagName&&n.tagName.toLowerCase()===t&&r.push(n),n=n.parentNode;return r}},{}],36:[function(e,t,n){"use strict";var r=e("credit-card-type");t.exports=function(e){var t=r(e);return t.forEach(function(e){"mastercard"===e.type&&(e.type="master-card")}),t}},{"credit-card-type":21}],37:[function(e,t,n){"use strict";var s=e("./create-authorization-data"),a=e("./json-clone"),c=e("./constants");t.exports=function(e,t){var n,r=t?a(t):{},i=s(e.authorization).attrs,o=a(e.analyticsMetadata);for(n in r.braintreeLibraryVersion=c.BRAINTREE_LIBRARY_VERSION,r._meta)r._meta.hasOwnProperty(n)&&(o[n]=r._meta[n]);return r._meta=o,i.tokenizationKey?r.tokenizationKey=i.tokenizationKey:r.authorizationFingerprint=i.authorizationFingerprint,r}},{"./constants":47,"./create-authorization-data":50,"./json-clone":57}],38:[function(e,t,n){"use strict";var r=e("./promise"),l=e("./constants"),u=e("./add-metadata");function d(e){return Math.floor(e/1e3)}t.exports={sendEvent:function(e,s,a){var c=d(Date.now());return r.resolve(e).then(function(e){var t=d(Date.now()),n=e.getConfiguration(),r=e._request,i=n.gatewayConfiguration.analytics.url,o={analytics:[{kind:l.ANALYTICS_PREFIX+s,isAsync:t!==c,timestamp:c}]};r({url:i,method:"post",data:u(n,o),timeout:l.ANALYTICS_REQUEST_TIMEOUT_MS},a)})}}},{"./add-metadata":37,"./constants":47,"./promise":60}],39:[function(e,t,n){"use strict";var r=e("@braintree/asset-loader/load-script");t.exports={loadScript:r}},{"@braintree/asset-loader/load-script":2}],40:[function(e,t,n){"use strict";var r="function"==typeof Object.assign?Object.assign:i;function i(e){var t,n,r;for(t=1;t<arguments.length;t++)for(r in n=arguments[t])n.hasOwnProperty(r)&&(e[r]=n[r]);return e}t.exports={assign:r,_assign:i}},{}],41:[function(e,t,n){"use strict";var i=e("./braintree-error"),o=e("./promise"),s=e("./errors");t.exports={verify:function(e){var t,n,r;return e?(r=e.name,t=e.client,n=e.authorization,null==t&&null==n?o.reject(new i({type:s.INSTANTIATION_OPTION_REQUIRED.type,code:s.INSTANTIATION_OPTION_REQUIRED.code,message:"options.client is required when instantiating "+r+"."})):n||"3.40.0"===t.getVersion()?o.resolve():o.reject(new i({type:s.INCOMPATIBLE_VERSIONS.type,code:s.INCOMPATIBLE_VERSIONS.code,message:"Client (version "+t.getVersion()+") and "+r+" (version 3.40.0) components must be from the same SDK version."}))):o.reject(new i({type:s.INVALID_USE_OF_INTERNAL_FUNCTION.type,code:s.INVALID_USE_OF_INTERNAL_FUNCTION.code,message:"Options must be passed to basicComponentVerification function."}))}}},{"./braintree-error":43,"./errors":54,"./promise":60}],42:[function(e,t,n){"use strict";var l=e("./once");t.exports=function(e,t){var n,r,i,o=e.length,s=o,a=l(t);if(0!==o)for(n=0;n<o;n++)r=e[n],i=c,0===r.length?(r(),i(null)):r(i);else a(null);function c(e){e?a(e):0===(s-=1)&&a(null)}}},{"./once":59}],43:[function(e,t,n){"use strict";var r=e("./enumerate");function i(e){if(!i.types.hasOwnProperty(e.type))throw new Error(e.type+" is not a valid type.");if(!e.code)throw new Error("Error code required.");if(!e.message)throw new Error("Error message required.");this.name="BraintreeError",this.code=e.code,this.message=e.message,this.type=e.type,this.details=e.details}((i.prototype=Object.create(Error.prototype)).constructor=i).types=r(["CUSTOMER","MERCHANT","NETWORK","INTERNAL","UNKNOWN"]),i.findRootError=function(e){return e instanceof i&&e.details&&e.details.originalError?i.findRootError(e.details.originalError):e},t.exports=i},{"./enumerate":53}],44:[function(e,t,n){"use strict";var i=e("../is-verified-domain");t.exports={checkOrigin:function(e,t){var n,r=document.createElement("a");return r.href=t,n="https:"===r.protocol?r.host.replace(/:443$/,""):"http:"===r.protocol?r.host.replace(/:80$/,""):r.host,r.protocol+"//"+n===e||(r.href=e,i(e))}}},{"../is-verified-domain":56}],45:[function(e,t,n){"use strict";var r=e("../enumerate");t.exports=r(["CONFIGURATION_REQUEST"],"bus:")},{"../enumerate":53}],46:[function(e,t,n){"use strict";var s=e("framebus"),r=e("./events"),a=e("./check-origin").checkOrigin,i=e("../braintree-error");function o(e){if(e=e||{},this.channel=e.channel,!this.channel)throw new i({type:i.types.INTERNAL,code:"MISSING_CHANNEL_ID",message:"Channel ID must be specified."});this.merchantUrl=e.merchantUrl,this._isDestroyed=!1,this._isVerbose=!1,this._listeners=[],this._log("new bus on channel "+this.channel,[location.href])}o.prototype.on=function(e,t){var n,r,i=t,o=this;this._isDestroyed||(this.merchantUrl&&(i=function(){a(this.origin,o.merchantUrl)&&t.apply(this,arguments)}),n=this._namespaceEvent(e),(r=Array.prototype.slice.call(arguments))[0]=n,r[1]=i,this._log("on",r),s.on.apply(s,r),this._listeners.push({eventName:e,handler:i,originalHandler:t}))},o.prototype.emit=function(e){var t;this._isDestroyed||((t=Array.prototype.slice.call(arguments))[0]=this._namespaceEvent(e),this._log("emit",t),s.emit.apply(s,t))},o.prototype._offDirect=function(e){var t=Array.prototype.slice.call(arguments);this._isDestroyed||(t[0]=this._namespaceEvent(e),this._log("off",t),s.off.apply(s,t))},o.prototype.off=function(e,t){var n,r,i=t;if(!this._isDestroyed){if(this.merchantUrl)for(n=0;n<this._listeners.length;n++)(r=this._listeners[n]).originalHandler===t&&(i=r.handler);this._offDirect(e,i)}},o.prototype._namespaceEvent=function(e){return["braintree",this.channel,e].join(":")},o.prototype.teardown=function(){var e,t;for(t=0;t<this._listeners.length;t++)e=this._listeners[t],this._offDirect(e.eventName,e.handler);this._listeners.length=0,this._isDestroyed=!0},o.prototype._log=function(e,t){this._isVerbose&&console.log(e,t)},o.events=r,t.exports=o},{"../braintree-error":43,"./check-origin":44,"./events":45,framebus:22}],47:[function(e,t,n){"use strict";t.exports={ANALYTICS_PREFIX:"web.",ANALYTICS_REQUEST_TIMEOUT_MS:2e3,ASSETS_URLS:{production:"https://assets.braintreegateway.com",sandbox:"https://assets.braintreegateway.com"},CLIENT_API_URLS:{production:"https://api.braintreegateway.com:443",sandbox:"https://api.sandbox.braintreegateway.com:443"},FRAUDNET_SOURCE:"BRAINTREE_SIGNIN",FRAUDNET_FNCLS:"fnparams-dede7cc5-15fd-4c75-a9f4-36c430ee3a99",FRAUDNET_URL:"https://c.paypal.com/da/r/fb.js",GRAPHQL_URLS:{production:"https://payments.braintree-api.com/graphql",sandbox:"https://payments.sandbox.braintree-api.com/graphql"},INTEGRATION_TIMEOUT_MS:6e4,VERSION:"3.40.0",INTEGRATION:"custom",SOURCE:"client",PLATFORM:"web",BRAINTREE_LIBRARY_VERSION:"braintree/web/3.40.0"}},{}],48:[function(e,t,n){"use strict";var r=e("./braintree-error"),i=e("./errors");t.exports=function(t,e){e.forEach(function(e){t[e]=function(){throw new r({type:i.METHOD_CALLED_AFTER_TEARDOWN.type,code:i.METHOD_CALLED_AFTER_TEARDOWN.code,message:e+" cannot be called after teardown."})}})}},{"./braintree-error":43,"./errors":54}],49:[function(e,t,n){"use strict";var r=e("./constants").ASSETS_URLS;t.exports={create:function(e){return r.production}}},{"./constants":47}],50:[function(e,t,n){"use strict";var s=e("../lib/vendor/polyfill").atob,a=e("../lib/constants").CLIENT_API_URLS;t.exports=function(e){var t,n,r,i,o={attrs:{},configUrl:""};return/^[a-zA-Z0-9]+_[a-zA-Z0-9]+_[a-zA-Z0-9_]+$/.test(e)?(r=e.split("_"),i=r[0],n={merchantId:r.slice(2).join("_"),environment:i},o.environment=n.environment,o.attrs.tokenizationKey=e,o.configUrl=a[n.environment]+"/merchants/"+n.merchantId+"/client_api/v1/configuration"):(t=JSON.parse(s(e)),o.environment=t.environment,o.attrs.authorizationFingerprint=t.authorizationFingerprint,o.configUrl=t.configUrl,o.graphQL=t.graphQL),o}},{"../lib/constants":47,"../lib/vendor/polyfill":62}],51:[function(e,t,n){(function(n){"use strict";var r=e("./braintree-error"),i=e("./promise"),o=e("./assets"),s=e("./errors"),a="3.40.0";t.exports={create:function(e){var t=i.resolve();return e.client?i.resolve(e.client):(n.braintree&&n.braintree.client||(t=o.loadScript({src:e.assetsUrl+"/web/"+a+"/js/client.min.js"}).catch(function(e){return i.reject(new r({type:s.CLIENT_SCRIPT_FAILED_TO_LOAD.type,code:s.CLIENT_SCRIPT_FAILED_TO_LOAD.code,message:s.CLIENT_SCRIPT_FAILED_TO_LOAD.message,details:{originalError:e}}))})),t.then(function(){return n.braintree.client.VERSION!==a?i.reject(new r({type:s.INCOMPATIBLE_VERSIONS.type,code:s.INCOMPATIBLE_VERSIONS.code,message:"Client (version "+n.braintree.client.VERSION+") and "+e.name+" (version "+a+") components must be from the same SDK version."})):n.braintree.client.create({authorization:e.authorization,debug:e.debug})}))}}}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"./assets":39,"./braintree-error":43,"./errors":54,"./promise":60}],52:[function(e,t,n){"use strict";var r=e("./batch-execute-functions");function i(){this._teardownRegistry=[],this._isTearingDown=!1}i.prototype.registerFunctionForTeardown=function(e){"function"==typeof e&&this._teardownRegistry.push(e)},i.prototype.teardown=function(t){this._isTearingDown?t(new Error("Destructor is already tearing down")):(this._isTearingDown=!0,r(this._teardownRegistry,function(e){this._teardownRegistry=[],this._isTearingDown=!1,"function"==typeof t&&t(e)}.bind(this)))},t.exports=i},{"./batch-execute-functions":42}],53:[function(e,t,n){"use strict";t.exports=function(e,n){return n=null==n?"":n,e.reduce(function(e,t){return e[t]=n+t,e},{})}},{}],54:[function(e,t,n){"use strict";var r=e("./braintree-error");t.exports={INVALID_USE_OF_INTERNAL_FUNCTION:{type:r.types.INTERNAL,code:"INVALID_USE_OF_INTERNAL_FUNCTION"},INSTANTIATION_OPTION_REQUIRED:{type:r.types.MERCHANT,code:"INSTANTIATION_OPTION_REQUIRED"},INCOMPATIBLE_VERSIONS:{type:r.types.MERCHANT,code:"INCOMPATIBLE_VERSIONS"},CLIENT_SCRIPT_FAILED_TO_LOAD:{type:r.types.NETWORK,code:"CLIENT_SCRIPT_FAILED_TO_LOAD",message:"Braintree client script could not be loaded."},METHOD_CALLED_AFTER_TEARDOWN:{type:r.types.MERCHANT,code:"METHOD_CALLED_AFTER_TEARDOWN"},BRAINTREE_API_ACCESS_RESTRICTED:{type:r.types.MERCHANT,code:"BRAINTREE_API_ACCESS_RESTRICTED",message:"Your access is restricted and cannot use this part of the Braintree API."}}},{"./braintree-error":43}],55:[function(e,t,n){"use strict";function r(){this._events={}}r.prototype.on=function(e,t){this._events[e]?this._events[e].push(t):this._events[e]=[t]},r.prototype._emit=function(e){var t,n,r=this._events[e];if(r)for(n=Array.prototype.slice.call(arguments,1),t=0;t<r.length;t++)r[t].apply(null,n)},t.exports=r},{}],56:[function(e,t,n){"use strict";var r,i={"paypal.com":1,"braintreepayments.com":1,"braintreegateway.com":1,"braintree-api.com":1};t.exports=function(e){var t;return e=e.toLowerCase(),!!/^https:/.test(e)&&((r=r||document.createElement("a")).href=e,t=r.hostname.split(".").slice(-2).join("."),i.hasOwnProperty(t))}},{}],57:[function(e,t,n){"use strict";t.exports=function(e){return JSON.parse(JSON.stringify(e))}},{}],58:[function(e,t,n){"use strict";t.exports=function(t){return Object.keys(t).filter(function(e){return"function"==typeof t[e]})}},{}],59:[function(e,t,n){arguments[4][18][0].apply(n,arguments)},{dup:18}],60:[function(n,r,e){(function(e){"use strict";var t=e.Promise||n("promise-polyfill");r.exports=t}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"promise-polyfill":23}],61:[function(e,t,n){"use strict";t.exports=function(e){return e?"":".min"}},{}],62:[function(e,r,t){(function(t){"use strict";var n="function"==typeof t.atob?t.atob:e;function e(e){var t,n,r,i,o,s,a="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",c="";if(!new RegExp("^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})([=]{1,2})?$").test(e))throw new Error("Non base64 encoded input passed to window.atob polyfill");for(s=0;t=(63&a.indexOf(e.charAt(s++)))<<2|(i=a.indexOf(e.charAt(s++)))>>4&3,n=(15&i)<<4|(o=a.indexOf(e.charAt(s++)))>>2&15,r=(3&o)<<6|63&a.indexOf(e.charAt(s++)),c+=String.fromCharCode(t)+(n?String.fromCharCode(n):"")+(r?String.fromCharCode(r):""),s<e.length;);return c}r.exports={atob:function(e){return n.call(t,e)},_atob:e}}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{}],63:[function(e,t,n){"use strict";t.exports=function(){return"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,function(e){var t=16*Math.random()|0;return("x"===e?t:3&t|8).toString(16)})}},{}]},{},[31])(31)});
+
+</script>
+<style>
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}:focus{outline:0}ins{text-decoration:none}del{text-decoration:line-through}
+
+.progressbar .current,.progressbar .last{-webkit-border-top-right-radius:20px;-webkit-border-bottom-right-radius:20px;-khtml-border-top-right-radius:20px;-khtml-border-bottom-right-radius:20px;border-top-right-radius:20px;border-bottom-right-radius:20px}.progressbar .first{-webkit-border-top-left-radius:20px;-webkit-border-bottom-left-radius:20px;-khtml-border-top-left-radius:20px;-khtml-border-bottom-left-radius:20px;border-top-left-radius:20px;border-bottom-left-radius:20px}input[type=submit],input[type=button],input.smallbutton,.ui-dialog-buttonpane button,input[type=submit]:hover,input[type=button]:hover,input.smallbutton:hover{color:#4D5357;-moz-box-shadow:0px 1px 0px #999;-webkit-box-shadow:0px 1px 0px #999;box-shadow:0px 1px 0px #999}body{font-size:62.5%;direction:ltr;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}h1{margin:20px 25px 12px;padding-bottom:13px}p,h2{line-height:1.5em}p.errormessage,h2.errormessage{margin:0px 25px 0px;padding-bottom:0px;color:#FF7900;font-weight:bold;padding-bottom:10px;float:left}#footer p,#footer h2{padding:20px 0}h2,p{padding-bottom:10px}h3{padding-bottom:15px}ul li{padding:5px 0;clear:both}ul li h2{float:left}ul li p{text-align:right;margin-top:-2px}.totalamount{margin:0 -10px 5px -10px;padding:10px 10px 0 10px}.totalamount p{font-size:1.8em;text-align:right;line-height:0.3em;padding-bottom:20px}.hgroup{border-bottom:1px solid #D0D0D0;margin:20px 25px 10px;height:33px}.hgroup h1,.hgroup h3{float:left;border:none;margin:0}.hgroup input{float:right}.reviewbox .hgroup,.review_container .hgroup{margin:0 0 10px}#header,#footer{width:100%}#footer{clear:both;height:60px}.purchases{padding:10px 25px 20px}.reviewbox{padding:20px 25px}h1,.hgroup{border-bottom:1px solid #D0D0D0}.progressbar{background-color:#f9f9f9;border:1px solid #D0D0D0;text-shadow:1px 1px white;margin-bottom:15px;width:99%;padding:3px;color:#999;-moz-border-radius:20px;-webkit-border-radius:20px;-khtml-border-radius:20px;border-radius:20px}.progressbar:after,.progressbar::after{height:0}.progressbar p{padding:0}.progressbar ol li{display:inline;float:left;text-align:center;padding:4px 0;clear:none}.progressbar .completed,.progressbar .current{font-weight:bold}.progressbar .completed{text-shadow:1px 1px rgba(255,255,255,0.5)}.progressbar .current{color:white;text-shadow:1px 1px rgba(0,0,0,0.2)}form{padding:0 25px}fieldset form,.button form{padding:0}legend span{display:block;visibility:hidden;height:0;width:0}div.legend{clear:both;padding-bottom:4px}label,input,textarea{font-size:1.2em;clear:both;display:block;clear:both}label{font-weight:bold;padding-bottom:4px}label[for=ship_to_billing_address]{clear:none;font-style:italic;font-weight:normal;padding-top:3px;padding-left:5px}label[for=ship_to_address_line2],label[for=bill_to_address_line2]{display:none}#required_field_explanation{text-align:right;font-size:1.2em}#required_field_char{font-weight:bold}select,input,textarea{border:1px solid #D0D0D0;-moz-border-radius:4px;-webkit-border-radius:4px;-khtml-border-radius:4px;border-radius:4px}select{background-color:#f9f9f9;font-size:1.2em;color:#4D5357;padding:6px}html>form ol li:hover select,form ol li select:focus{background-color:white;-moz-box-shadow:0px 1px 0px #d5d5d5;-webkit-box-shadow:0px 1px 0px #d5d5d5;box-shadow:0px 1px 0px #d5d5d5}input,textarea{padding:6px;background-color:#f9f9f9}input[type=radio]{border:none}input[name=bill_to_address_line1],input[name=ship_to_address_line1]{margin-bottom:5px}input[type=checkbox]{width:15px;float:left;border:none}input[type=submit],input[type=button],#receipt input[type=button],#finish input[type=button]{margin:30px 0 20px;clear:none;padding:7px;min-width:100px}input.bigbutton{margin:30px 0 20px;clear:none;padding:7px;width:145px}input.smallbutton{width:125px;font-size:1.0em;text-align:center;padding:3px 0;margin:0 0 10px}input[name=card_cvn],input[name=card_cvn_masked]{width:60px;float:left}input[type=submit][disabled]{opacity:0.4;cursor:auto}input[type=submit]:hover,input[type=button]:hover{padding-top:8px;margin-bottom:19px}input.smallbutton:hover{padding-top:4px;margin-bottom:9px}input[disabled=disabled]{color:#999}input[type=radio]{float:left;width:14px}input[type=submit],input[type=button],input.smallbutton,.ui-dialog-buttonpane button{cursor:pointer;text-shadow:1px 1px white;font-weight:bold}input[type=number]{-moz-appearance:textfield;-webkit-appearance:textfield}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}input[name=bill_to_address_line1],input[name=ship_to_address_line1],input[name=bill_to_address_line2],input[name=ship_to_address_line2]{width:90%}input[name=driver_license_number]{width:85%}input[name=echeck_routing_number],input[name=echeck_routing_number_masked]{width:80%}input[name=echeck_account_number],input[name=echeck_account_number_masked]{width:80%}input[name=bill_to_forename],input[name=ship_to_forename],input[name=bill_to_surname],input[name=ship_to_surname],input[name=bill_to_company_name],input[name=ship_to_company_name]{width:65%}input[name=bill_to_address_country],input[name=ship_to_address_country]{width:55%}input[name=bill_to_phone],input[name=ship_to_phone],input[name=bill_to_email],input[name=ship_to_email]{width:50%}input[name=creditcardnumber],select[name=jpo_payment_method],select[name=echeck_account_type]{width:45%}input[name=bill_to_address_city],input[name=ship_to_address_city],input[name=bill_to_address_state],input[name=ship_to_address_state],input[name=company_tax_id]{width:40%}input[name=bill_to_address_state],input[name=ship_to_address_state],input[name=bill_to_address_postal_code],input[name=ship_to_address_postal_code]{width:25%}input[name=echeck_check_number]{width:22%}input[name=cvn],input[name=driver_license_state]{width:15%}select[name=jpo_installments]{width:18%}form ol li:hover input,form ol li input:focus{background-color:white;-moz-box-shadow:0px 1px 0px #d5d5d5;-webkit-box-shadow:0px 1px 0px #d5d5d5;box-shadow:0px 1px 0px #d5d5d5}form ol li:hover input[type=radio],form ol li:hover input[type=checkbox]{-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none}form ol li:hover input[disabled=disabled]{background-color:#f9f9f9;-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none}fieldset fieldset ol{clear:both}fieldset fieldset ol li{float:left;width:49%;clear:none;margin-bottom:5px}fieldset ol li fieldset ol li label{background:none no-repeat left 50%;line-height:22px;padding:0 0 0 40px;width:auto;clear:none;float:left;font-weight:normal;font-size:1.1em}span.input_label{font-size:1.2em;clear:both;display:block;clear:both;font-weight:bold;padding-bottom:4px}label[for=card_type_001]{background-image:url(/OA_MEDIA/visa.gif)}label[for=card_type_003]{background-image:url(/OA_MEDIA/amex.gif)}label[for=card_type_004]{background-image:url(/OA_MEDIA/discover.gif)}label[for=card_type_002]{background-image:url(/OA_MEDIA/mastercard.gif)}label[for=card_type_005]{background-image:url(/OA_MEDIA/diners.gif)}label[for=card_type_007]{background-image:url(/OA_MEDIA/jcb.gif)}label[for=card_type_021]{background-image:url(/OA_MEDIA/jal.gif)}label[for=card_type_014]{background-image:url(/OA_MEDIA/enroute.gif)}label[for=card_type_027]{background-image:url(/OA_MEDIA/nicos.gif)}label[for=card_type_031]{background-image:url(/OA_MEDIA/delta.gif)}label[for=card_type_033]{background-image:url(/OA_MEDIA/visa_electron.gif)}label[for=card_type_034]{background-image:url(/OA_MEDIA/dankort.gif)}label[for=card_type_035]{background-image:url(/OA_MEDIA/laser.gif)}label[for=card_type_036]{background-image:url(/OA_MEDIA/cartebleue.gif)}label[for=card_type_037]{background-image:url(/OA_MEDIA/cartasi.gif)}label[for=card_type_042]{background-image:url(/OA_MEDIA/maestro.gif)}label[for=card_type_043]{background-image:url(/OA_MEDIA/gemoney.gif)}label[for=card_type_024]{background-image:url(/OA_MEDIA/maestro.gif)}label[for=card_type_006]{background-image:url(/OA_MEDIA/carteblanche.gif)}label[for=card_type_053]{background-image:url(/OA_MEDIA/orico.gif)}label[for=card_type_050]{background-image:url(/OA_MEDIA/hipercard.gif)}label[for=card_type_054]{background-image:url(/OA_MEDIA/elo.gif)}.error{color:#FF7900;padding:4px;font-size:1.2em;font-weight:bold}input.errorborder,select.errorborder,.errorborder{border:2px solid #FF7900;-moz-border-radius:4px;-webkit-border-radius:4px;-khtml-border-radius:4px;border-radius:4px}ol.errorborder{padding-top:4px;-moz-border-radius:4px;-webkit-border-radius:4px;-khtml-border-radius:4px;border-radius:4px}.review_container{padding:5px 0}.row{padding:20px 0;display:block;clear:both}.column{width:356px;padding:0 30px;float:left}.widecolumn{width:780px;margin:0 30px;float:left}#receipt .final{padding-left:30px}#receipt .rule{margin:0px 25px;border:none;border-top:1px solid #D0D0D0;clear:both}#finish .row{border-top:1px solid #D0D0D0}#finish .button{clear:both}#receipt h1,#finish h1{font-size:2.4em;margin:0;border:none}#receipt form,#finish form{background:none;padding:0}input[type=submit],input[type=button],input.smallbutton,.ui-dialog .ui-dialog-buttonpane button{background:#e5e5e5;background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlNWU1ZTUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);background:-moz-linear-gradient(top, #fff 0%, #e5e5e5 100%);background:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff), color-stop(100%, #e5e5e5));background:-webkit-linear-gradient(top, #fff 0%, #e5e5e5 100%);background:-o-linear-gradient(top, #fff 0%, #e5e5e5 100%);background:-ms-linear-gradient(top, #fff 0%, #e5e5e5 100%);background:linear-gradient(top, #fff 0%, #e5e5e5 100%);filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr = 'white', endColorstr = '#e5e5e5', GradientType = 0)"}input[type=submit]:hover,input[type=button]:hover,input.smallbutton:hover,.ui-dialog .ui-dialog-buttonpane button:hover{background:white;background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlNWU1ZTUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);background:-moz-linear-gradient(top, #e5e5e5 0%, #fff 99%);background:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #e5e5e5), color-stop(99%, #fff));background:-webkit-linear-gradient(top, #e5e5e5 0%, #fff 99%);background:-o-linear-gradient(top, #e5e5e5 0%, #fff 99%);background:-ms-linear-gradient(top, #e5e5e5 0%, #fff 99%);background:linear-gradient(top, #e5e5e5 0%, #fff 99%);filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr = '#e5e5e5', endColorstr = 'white', GradientType = 0)"}.cancel_area{margin-top:5px;clear:both;padding:15px 0px;border-top:1px solid #d0d0d0}.left{float:left}.right{float:right}.center{display:block;margin:0 auto;width:auto;text-align:center}.group:after,.group::after{content:".";display:block;clear:both;visibility:hidden}.terms p{font-size:1.0em;text-shadow:1px 1px white}.terms a{color:#1C3B6D}.terms a:hover{text-decoration:none}#terms_dialog p{font-size:1.0em;text-shadow:1px 1px white;margin:5px}.copy{padding:20px 20px 0 20px;overflow-y:scroll;height:360px}.copy h2{font-weight:bold;font-size:1.3em}li#routing_number{width:50%}li#account_number{width:50%}li#echeck_driver_license_number{width:50%;float:left;clear:none}li#echeck_driver_license_state{width:50%;display:block}.echeck{padding-top:5px}.echeck li{padding:0}html:lang(ja-JP)>body{font-size:81.25%;font-family:Arial, Helvetica, "æ¸¸ã‚´ã‚·ãƒƒã‚¯", YuGothic, "ãƒ’ãƒ©ã‚®ãƒŽè§’ã‚´ ProN W3", "Hiragino Kaku Gothic ProN", "ãƒ¡ã‚¤ãƒªã‚ª", Meiryo, sans-serif}html:lang(km-KH)>body,html:lang(ko-KR)>body,html:lang(lo-LA)>body,html:lang(th-TH)>body{font-size:75%}html:lang(zh-HK)>body,html:lang(zh-MO)>body,html:lang(zh-CN)>body,html:lang(zh-SG)>body,html:lang(zh-TW)>body{font-size:81.25%;font-family:Helvetica, Arial, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif}html:lang(zh-HK) h1,html:lang(zh-HK) h2,html:lang(zh-HK) h3,html:lang(zh-HK) label,html:lang(zh-HK) span.input_label,html:lang(zh-HK) .totalamount h2,html:lang(zh-HK) .progressbar .completed,html:lang(zh-HK) .progressbar .current,html:lang(zh-HK) input[type=submit],html:lang(zh-HK) input[type=button],html:lang(zh-HK) input.smallbutton,html:lang(zh-HK) .ui-dialog-buttonpane button,html:lang(zh-HK) .error,html:lang(zh-HK) .errormessage,html:lang(zh-MO) h1,html:lang(zh-MO) h2,html:lang(zh-MO) h3,html:lang(zh-MO) label,html:lang(zh-MO) span.input_label,html:lang(zh-MO) .totalamount h2,html:lang(zh-MO) .progressbar .completed,html:lang(zh-MO) .progressbar .current,html:lang(zh-MO) input[type=submit],html:lang(zh-MO) input[type=button],html:lang(zh-MO) input.smallbutton,html:lang(zh-MO) .ui-dialog-buttonpane button,html:lang(zh-MO) .error,html:lang(zh-MO) .errormessage,html:lang(zh-CN) h1,html:lang(zh-CN) h2,html:lang(zh-CN) h3,html:lang(zh-CN) label,html:lang(zh-CN) span.input_label,html:lang(zh-CN) .totalamount h2,html:lang(zh-CN) .progressbar .completed,html:lang(zh-CN) .progressbar .current,html:lang(zh-CN) input[type=submit],html:lang(zh-CN) input[type=button],html:lang(zh-CN) input.smallbutton,html:lang(zh-CN) .ui-dialog-buttonpane button,html:lang(zh-CN) .error,html:lang(zh-CN) .errormessage,html:lang(zh-SG) h1,html:lang(zh-SG) h2,html:lang(zh-SG) h3,html:lang(zh-SG) label,html:lang(zh-SG) span.input_label,html:lang(zh-SG) .totalamount h2,html:lang(zh-SG) .progressbar .completed,html:lang(zh-SG) .progressbar .current,html:lang(zh-SG) input[type=submit],html:lang(zh-SG) input[type=button],html:lang(zh-SG) input.smallbutton,html:lang(zh-SG) .ui-dialog-buttonpane button,html:lang(zh-SG) .error,html:lang(zh-SG) .errormessage,html:lang(zh-TW) h1,html:lang(zh-TW) h2,html:lang(zh-TW) h3,html:lang(zh-TW) label,html:lang(zh-TW) span.input_label,html:lang(zh-TW) .totalamount h2,html:lang(zh-TW) .progressbar .completed,html:lang(zh-TW) .progressbar .current,html:lang(zh-TW) input[type=submit],html:lang(zh-TW) input[type=button],html:lang(zh-TW) input.smallbutton,html:lang(zh-TW) .ui-dialog-buttonpane button,html:lang(zh-TW) .error,html:lang(zh-TW) .errormessage{font-weight:normal}html:lang(zh-HK) label[for=ship_to_billing_address],html:lang(zh-MO) label[for=ship_to_billing_address],html:lang(zh-CN) label[for=ship_to_billing_address],html:lang(zh-SG) label[for=ship_to_billing_address],html:lang(zh-TW) label[for=ship_to_billing_address]{font-style:normal}
+
+body
+{
+	background-color: #F5F5F5;
+	color: #4D5357
+}
+.header
+{
+	background: #000000;
+	display: block;
+	height: 30
+}
+.container
+{
+	margin:0 auto;position:relative;width:840px;
+}
+
+.left_column{float:left;width:65%}.right_column{margin-left:635px;position:fixed;width:15%}.left_column,.right_column{border:1px solid #D0D0D0;-moz-border-radius:10px;-webkit-border-radius:10px;-khtml-border-radius:10px;border-radius:10px;margin-top:15px;padding:30px}#footer{margin-top:15px}li{clear:both;padding:6px 0}.left_column li input{margin-bottom:6px}#bill_to_address_line1{margin-bottom:12px}label,input,textarea{clear:none;float:left}h1{margin:0 0 20px}.totalamount{margin-top:10px;min-width:120px}.totalamount p{word-wrap:break-word;line-height:1.5em;clear:left;padding-bottom:5px}.totalamount li h2{padding-bottom:1px}fieldset fieldset label[for="cardtype"]{font-size:1.2em}p.note{background-color:#FCF6D6;padding:20px}label,label[for="cardtype"]{padding-top:10px;width:27.5%}label[for="bill_to_address_line2"],label[for="ship_to_address_line2"]{display:none}label[for="shiptobilling"]{width:70%}#bill_to_address_line2,#ship_to_address_line2{margin-left:27.5%}input[name="bill_to_address_line1"],input[name="bill_to_address_line2"],input[name="ship_to_address_line1"],input[name="ship_to_address_line2"]{width:65%}input[name=echeck_routing_number],input[name=echeck_routing_number_masked],input[name=echeck_account_number],input[name=echeck_account_number_masked],input[name=echeck_check_number],input[name=driver_license_number]{width:40%}.cardposition{width:400px}fieldset fieldset ol li{float:left;height:15px;margin-bottom:15px;width:180px}#shipping_check_box{display:block;margin-top:15px;clear:both;padding-left:27.5%}#shipping_check_box label{width:90%}#required_field_explanation{margin-bottom:30px;margin-top:-40px}.progressbar,fieldset .cancelbutton{display:none}.hgroup{margin:0px 0px 10px}.purchases{padding:0 0 0px}.error{clear:both;padding:4px 4px 4px 27.5%}.spc_error{padding:0px 0px 20px 0px}div.legend{clear:none}#card_expiry_month{float:left;margin-right:3px}#card_type_selection{margin-top:10px;padding-left:27.5%}span.input_label{clear:none;width:27.5%;float:left}.single_secure:after{content:url(/OA_MEDIA/secure.png)}li#routing_number,li#account_number,li#echeck_driver_license_number,li#echeck_driver_license_state{float:none;clear:both;width:100%}#driver_license_state,select[name="echeck_account_type"]{width:42.5%}element.style{width:400px}@media only screen and (min-width: 768px) and (max-width: 959px){#payment_details label,span.input_label{width:30%;white-space:nowrap}#payment_details .error{padding:4px 4px 4px 30%}#payment_details .spc_error{padding:0px 0px 20px 0px}}@media only screen and (max-width: 270px){#required_field_explanation{display:inline}#payment_details #required_field_explanation{display:inline-block}}
+
+/*------------------------ 2.0 TYPOGRAPHY ------------------------ */
+body, input, textarea, .chzn-single, .chzn-results{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    font-size: 1.6em;
+}
+
+h2 {
+    font-size: 1.2em;
+}
+
+h3 {
+    font-size: 1.5em;
+}
+
+p {
+    font-size: 1.2em;
+}
+
+label {
+    font-size: 1.2em;
+}
+
+#footer p {
+    color: #5f8aaa;
+}
+
+input, textarea {
+    background-color: #f9f9f9;
+}
+
+/*------------------------ 3.0 PAGE LAYOUT ------------------------ */
+
+#header {
+    background: #000000;
+    display: block;
+}
+
+.left_column, .right_column, .review_container {
+    background-color: #fff;
+}
+
+#footer {
+    background: #003C69;
+    display: none;
+}
+
+#notification_logo {
+    display: none;
+}
+
+#mobile, .totalamount {
+    background-color: #EDF9EC;
+    color: #4D5357;
+}
+
+.ui-widget-header {
+    background: #EDF9EC;
+    color: #4D5357;
+}
+
+.ui-widget {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.ui-widget button {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.progressbar .completed,
+.progressbar .current {
+    background: #88D47E;
+}
+
+.progressbar .completed {
+    color:  #5f9458;
+}
+
+/*------------------------- PAY BUTTON ----------------------------*/
+
+input.complete {
+    color: #FFFFFF;
+    border: 1px solid #61c361;
+    text-shadow: none;
+    background: #448944;
+
+    /* Old browsers */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzYyYzQ2MiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM1MWEzNTEiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top, #61c361 0%, #448944 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #61c361), color-stop(100%, #448944)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #61c361 0%, #448944 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #61c361 0%, #448944 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #61c361 0%, #448944 100%); /* IE10+ */
+    background: linear-gradient(top, #61c361 0%, #448944 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#61c361', endColorstr = '#448944', GradientType = 0); /* IE6-8 */
+}
+
+input.complete:hover {
+    color: #FFFFFF;
+    background: #61c361;
+
+    /* Old browsers */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIxJSIgc3RvcC1jb2xvcj0iIzUxYTM1MSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM2MmM0NjIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top, #448944 1%, #61c361 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(1%, #448944), color-stop(100%, #61c361)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #448944 1%, #61c361 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #448944 1%, #61c361 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #448944 1%, #61c361 100%); /* IE10+ */
+    background: linear-gradient(top, #448944 1%, #61c361 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#448944', endColorstr = '#61c361', GradientType = 0); /* IE6-8 */
+
+    /* BOX SHADOW */
+    -moz-box-shadow: inset 0px 1px 0px #61c361;
+    -webkit-box-shadow: inset 0px 1px 0px #61c361;
+    box-shadow: inset 0px 1px 0px #61c361;
+}
+
+.errMsg
+{
+display:none
+}
+
+.left_column,.right_column,.review_container{margin-bottom:30px;border:1px solid #D0D0D0;-moz-border-radius:10px;-webkit-border-radius:10px;-khtml-border-radius:10px;border-radius:10px}
+
+.loader {opacity: 0.5; margin: auto;width: 100%;	height:100%; background: url('page-loader.gif') 50% 50% no-repeat rgb(249,249,249); background-size:15% 15%; background-color: gray; }
+</style>
+  <style>
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+        .modal button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body onload="dis1()">
+
+  
+<div id="responseDiv">
+    
+    <!-- Two buttons to trigger each API separately -->
+    <button id="createCustomerButton">Create Customer</button>
+    <button id="vaultPaymentMethodButton" disabled>Vault Payment Method</button>
+
+    <h2>Payment Method ID:</h2>
+    <input type="text" id="paymentMethodIdInput" placeholder="Enter Payment Method ID" />
+
+    </br><h2>Response Data:</h2>
+    <pre id="responseData"></pre> <!-- Display full API response here -->
+
+    <h2>Parsed Data:</h2>
+    <ul>
+	
+        <li><strong>Client Mutation ID:</strong> <span id="clientMutationId"></span></li>
+        <li><strong>Customer ID:</strong> <span id="customerId"></span></li>
+        <li><strong>Vault Payment Method ID:</strong> <span id="paymentMethodId"></span></li>
+        <li><strong>Success Message:</strong> <span id="verificationStatus"></span></li>
+        <li><strong>Error Message:</strong> <span id="errorMessage"></span></li>
+        <li><strong>Error Type:</strong> <span id="errorType"></span></li>
+        <li><strong>Error Class:</strong> <span id="errorClass"></span></li>
+    </ul>
+	
+	<form name="retForm" action="https://testistore.gcrta.org/OA_HTML/ptcResponse.jsp" method="post">
+	<ul>
+	<li>Input Params:</li>
+	<li>tokenKey: <input id="tokenKey" name="tokenKey" value="sandbox_9q7rq2qd_sp89zypk2xt3rq3n"> </li>
+	<li>apiURL: <input id="apiURL" name="apiURL" value="https://payments.sandbox.braintree-api.com/graphql"></li>
+	<li>apiKey: <input id="apiKey" name="apiKey" value="Basic dzNqY3k1Mm1iZmt4dHY2djplYWUxN2UwZjg5NDI0ZjdjN2EyMTNhYzZjYTM1NmZkOQ=="></li>
+	<li>sessId: <input id="sessId" name="sessId" value="000000388085|6666126a00000066b0671"></li>
+	<li>uuid: <input id="uuid" name="uuid" value="67776fd5-8bc6-4b23-a89d-6ae25cfe3ec9"></li>
+	<li>orgId: <input id="orgID" name="orgID" value="0"></li>
+	<li>respUrl: <input id="respUrl" name="respUrl" value="https://testistore.gcrta.org/OA_HTML/ptcResponse.jsp"></li>
+	
+	<li>Output Params:</li>
+	<li>statuscode: <input id="statusCode" name="statusCode"></li>
+	<li>statusMsg: <input id="statusMsg" name="statusMsg"></li>
+	<li>paymentMethodID1: <input id="paymentMethodID1" name="paymentMethodID1"></li>
+	<li>customerId: <input id="custId" name="custId"></li>
+	
+	<li>lastFour: <input id="lastFour" name="lastFour"></li>
+	<li>type: <input id="type" name="type"></li>
+	<li>firstName: <input id="firstName" name="firstName"></li>
+	<li>lastName: <input id="lastName" name="lastName"></li>
+	<li><input id="email" name="email"></li>
+	<li>none: <input id="nonce" name="nonce"></li>
+	<li>cardholderName: <input id="cardHolderName" name="cardHolderName"></li>
+	<li><input id="addr1" name="addr1"></li>
+	<li><input id="addr2" name="addr2"></li>
+	<li><input id="city" name="city"></li>
+	<li><input id="state" name="state"></li>
+	<li>country: <input id="country" name="country"></li>
+	<li>zipcode: <input id="zip" name="zip"></li>
+	<li><input id="PaymentMethod" name="PaymentMethod" value="CC"></li>
+	<li><input id="pDebug" name="pDebug" value="false"></li>
+	</ul>
+	
+	</form>
+
+
+</div>
+	
+    <script>
+		
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+		
+	
+	document.getElementById("responseDiv").style.display = "none";//Srini fusion. Uncomment for PROD comment out for PROD change to 'none'/'block'
+        let customerId = ''; // Variable to store the customerId
+
+        // Create Customer Button Click Event
+        //document.getElementById('createCustomerButton').addEventListener('click', function () {
+		document.getElementById('createCustomerButton').onclick = function() {
+		  createCustomer();
+		};
+
+		//Srini Fusion development
+		function createCustomer(){
+			//alert('cardholder : '+document.getElementById('card_name').value.trim());
+				var nameVal1=document.getElementById('card_name').value.trim().split(" ");
+				document.getElementById("firstName").value = nameVal1[0];
+				if (nameVal1.length>1)
+				{
+					document.getElementById("lastName").value = nameVal1[1].trim();
+				}else
+				{
+					document.getElementById("lastName").value =' ';
+				}
+			//alert('firstname/lastname  : '+document.getElementById("firstName").value+document.getElementById("lastName").value);
+			//alert('apiurl/key  : '+document.getElementById("apiURL").value+document.getElementById("apiKey").value);
+            const apiUrl1 = document.getElementById("apiURL").value;
+            const createCustomerData = {
+                query: `mutation createCustomer ($input: CreateCustomerInput) {
+                    createCustomer(input: $input) {
+                        clientMutationId
+                        customer {
+                            id
+                            email
+                            firstName
+                            lastName
+                        }
+                    }
+                }`,
+                variables: {
+                    input: {
+                        clientMutationId: "",
+                        customer: {
+                            company: "",
+                            email: "",
+                            firstName: document.getElementById("firstName").value,
+                            lastName: document.getElementById("lastName").value,
+                            phoneNumber: ""
+                        }
+                    }
+                }
+            };
+
+            const headers = {
+                'Authorization': document.getElementById("apiKey").value,
+                'Braintree-Version': '2023-09-28',
+                'Content-Type': 'application/json'
+            };
+
+            fetch(apiUrl1, {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(createCustomerData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                const customer = data.data.createCustomer?.customer;
+                if (customer && customer.id) {
+                    // Store the customer ID and update the UI
+                    customerId = customer.id;
+                    document.getElementById('clientMutationId').textContent = data.data.createCustomer.clientMutationId;
+                    document.getElementById('customerId').textContent = customerId;
+					document.getElementById('custId').value = customerId;
+
+                    // Enable the "Vault Payment Method" button
+                    document.getElementById('vaultPaymentMethodButton').disabled = false;
+					//alert ('customerid : '+customerId);	
+					vaultPaymentMethod();								
+
+                } else {
+                    throw new Error('Customer creation failed');
+                }
+            })
+			
+            .catch(error => {
+                console.error('Error with Create Customer API:', error);
+                document.getElementById('responseData').textContent = 'Error with Create Customer API: ' + error.message;
+            });
+        };
+
+        // Vault Payment Method Button Click Event
+        //document.getElementById('vaultPaymentMethodButton').addEventListener('click', function () {
+		document.getElementById('vaultPaymentMethodButton').onclick = function() {
+		  vaultPaymentMethod();
+		};
+
+        function vaultPaymentMethod() {
+            const paymentMethodId = document.getElementById('paymentMethodIdInput').value;
+            
+            if (!paymentMethodId) {
+                alert("Please enter a valid Payment Method ID.");
+                return;
+            }
+            
+            if (!customerId) {
+                alert("Please create a customer first.");
+                return;
+            }
+
+            const apiUrl2 = document.getElementById("apiURL").value;
+            const vaultPaymentData = {
+                query: `mutation ExampleVaultWithTypeFragment($input: VaultPaymentMethodInput!) {
+                    vaultPaymentMethod(input: $input) {
+                        paymentMethod {
+                            id
+                            details {
+                                __typename
+                                ... on CreditCardDetails {
+                                    cardholderName
+                                }
+                                ... on VenmoAccountDetails {
+                                    username
+                                }
+                            }
+                        }
+                        verification {
+                            status
+                        }
+                    }
+                }`,
+                variables: {
+                    input: {
+                        paymentMethodId: paymentMethodId, // Use the dynamic input here
+                        customerId: customerId
+                    }
+                }
+            };
+
+            const headers = {
+                'Authorization': document.getElementById("apiKey").value,
+                'Braintree-Version': '2023-09-28',
+                'Content-Type': 'application/json'
+            };
+
+            fetch(apiUrl2, {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(vaultPaymentData)
+            })
+            .then(response => response.json())
+            .then(vaultData => {
+                const paymentMethod = vaultData.data.vaultPaymentMethod?.paymentMethod;
+                const verificationStatus = vaultData.data.vaultPaymentMethod?.verification?.status;
+
+                // Parsing errors from GraphQL response
+                const errors = vaultData.errors && vaultData.errors[0]; // Get the first error if available
+                const errorMessage = errors ? errors.message : 'N/A';
+                const errorType = errors && errors.extensions ? errors.extensions.errorType : 'N/A'; // Extract 'errorType' from extensions
+                const errorClass = errors && errors.extensions ? errors.extensions.errorClass : 'N/A'; // Extract 'errorClass' from extensions
+
+                // Display the parsed data in the UI
+                document.getElementById('paymentMethodId').textContent = paymentMethod ? paymentMethod.id : 'N/A';
+                document.getElementById('verificationStatus').textContent = verificationStatus || 'N/A';
+                document.getElementById('errorMessage').textContent = errorMessage;
+                document.getElementById('errorType').textContent = errorType;
+                document.getElementById('errorClass').textContent = errorClass;
+				
+				document.getElementById('paymentMethodID1').value = paymentMethod ? paymentMethod.id : 'N/A';
+				//For failure - pass postalcode=l';l'l
+                if (verificationStatus === null || verificationStatus === undefined) {
+				  document.getElementById('statusCode').value = 'Error';
+				  document.getElementById('statusMsg').value = errorMessage+'('+errorClass+':'+errorType+')';
+				  alert("Card tokenization failed. Error: "+document.getElementById('statusMsg').value);
+				  document.getElementById("myModal").style.display = "block";
+				  document.getElementById('modalMsg').textContent = 'Card tokenization failed. Error: '+document.getElementById('statusMsg').value;
+				}else  {
+				  document.getElementById('statusCode').value = 'Success';
+				  document.getElementById('statusMsg').value = verificationStatus;
+				  alert("Card has been successfully tokenized!");
+				  document.getElementById("myModal").style.display = "block";
+				  document.getElementById('modalMsg').textContent = 'Card has been successfully tokenized!';
+				}				
+
+                // Display the full response for debugging
+                document.getElementById('responseData').textContent = JSON.stringify(vaultData, null, 2);
+				//alert('reponse'+ JSON.stringify(vaultData, null, 2));
+				document.getElementById("responseDiv").style.display = "none";//Srini Fusion development . uncomment for PROD comment for prod
+
+            })
+            .catch(error => {
+                console.error('Error with Vault Payment Method API:', error);
+                document.getElementById('responseData').textContent = 'Error with Vault Payment Method API: ' + error.message;
+            });
+        };
+    </script>
+
+    <div class="header">
+		<div class="container group" >
+		</div>
+	</div>
+	<div class="container">
+		<fieldset id="cc_ach" style="display:none;">
+			<ol>
+				<li>
+					<fieldset>
+						<ol>
+							<li>
+								
+								<label><input type="radio" name="opt" id="c_card" value="CC" onclick="dis()"> Credit Card</label>
+								
+							</li>
+							<li>
+							
+								<label><input type="radio" name="opt" id="ach_card" value="ACH" onclick="dis()"> ACH Debit Card</label>
+								
+							</li>
+						</ol>
+					</fieldset>
+				</li>
+			</ol>	
+		</fieldset>
+		<form action="https://testistore.gcrta.org/" id="my-sample-form" method="post">
+			<div class="errMsg" id="errorText">
+				<div class="left_column">
+					<textarea id="errTxt" name="errTxt" cols="80" style="visibility:hidden;background:transparent;width:100%;outline:none;color:red;font-size:100%;font-weight:bold"></textarea>
+				</div>
+			</div>
+
+			<div class="left_column" id="payment_details" style="display: block;">
+				<h1>Payment Details</h1>
+				<div id="required_field_explanation">
+					<span id="required_field_char"> * </span> Required field
+				</div>
+				
+				<fieldset>
+					<ol>
+						<li>
+							<label for="card-number">Card Number *</label>
+							<div id="card-number"></div>
+						</li>
+					</ol>
+				</fieldset>
+				<fieldset>
+					<ol>
+						<li>
+							<label for="expiration-date">Expiration Date *</label>
+							<div id="expiration-date"></div>
+						</li>
+					</ol>
+				</fieldset>
+				<fieldset>
+					<ol>
+						<li>
+							<label for="cvv">CVV *</label>
+							<div id="cvv"></div>
+						</li>
+					</ol>
+				</fieldset>
+				<fieldset>
+					<ol>
+						<li>
+							<label for="cardName">Card Holder Name *</label>
+							<input type="tel" name="card_name" id="card_name" value="" class="" aria-required="true" placeholder="Card Holder Name" style="width: 165px;">
+						</li>
+					</ol>
+				</fieldset>
+				
+				<fieldset>
+					<ol>
+						<li>
+							<label for="postal_code">Postal Code * </label>
+							<input type="text" name="postal_code" id="postal_code" value="" aria-required="true" class="" placeholder="00000"  style="width: 165px;">
+						</li>
+					</ol>
+				</fieldset>
+				<fieldset>
+					<ol>
+						<li>
+							<label for="countryCodeAlpha2">Country *</label>
+							<select name="country_code" id="country_code" size="Number_of_options">							
+								<option value="AF">Afghanistan</option>
+								<option value="AX">Aland Islands</option>
+								<option value="AL">Albania</option>
+								<option value="DZ">Algeria</option>
+								<option value="AS">American Samoa</option>
+								<option value="AD">Andorra</option>
+								<option value="AO">Angola</option>
+								<option value="AI">Anguilla</option>
+								<option value="AQ">Antarctica</option>
+								<option value="AG">Antigua and Barbuda</option>
+								<option value="AR">Argentina</option>
+								<option value="AM">Armenia</option>
+								<option value="AW">Aruba</option>
+								<option value="AU">Australia</option>
+								<option value="AT">Austria</option>
+								<option value="AZ">Azerbaijan</option>
+								<option value="BS">Bahamas</option>
+								<option value="BH">Bahrain</option>
+								<option value="BD">Bangladesh</option>
+								<option value="BB">Barbados</option>
+								<option value="BY">Belarus</option>
+								<option value="BE">Belgium</option>
+								<option value="BZ">Belize</option>
+								<option value="BJ">Benin</option>
+								<option value="BM">Bermuda</option>
+								<option value="BT">Bhutan</option>
+								<option value="BO">Bolivia</option>
+								<option value="BQ">Bonaire, Sint Eustatius and Saba</option>
+								<option value="BA">Bosnia and Herzegovina</option>
+								<option value="BW">Botswana</option>
+								<option value="BV">Bouvet Island</option>
+								<option value="BR">Brazil</option>
+								<option value="IO">British Indian Ocean Territory</option>
+								<option value="BN">Brunei Darussalam</option>
+								<option value="BG">Bulgaria</option>
+								<option value="BF">Burkina Faso</option>
+								<option value="BI">Burundi</option>
+								<option value="KH">Cambodia</option>
+								<option value="CM">Cameroon</option>
+								<option value="CA">Canada</option>
+								<option value="CV">Cape Verde</option>
+								<option value="KY">Cayman Islands</option>
+								<option value="CF">Central African Republic</option>
+								<option value="TD">Chad</option>
+								<option value="CL">Chile</option>
+								<option value="CN">China</option>
+								<option value="CX">Christmas Island</option>
+								<option value="CC">Cocos (Keeling) Islands</option>
+								<option value="CO">Colombia</option>
+								<option value="KM">Comoros</option>
+								<option value="CG">Congo</option>
+								<option value="CD">Congo, Democratic Republic of the Congo</option>
+								<option value="CK">Cook Islands</option>
+								<option value="CR">Costa Rica</option>
+								<option value="CI">Cote D'Ivoire</option>
+								<option value="HR">Croatia</option>
+								<option value="CU">Cuba</option>
+								<option value="CW">Curacao</option>
+								<option value="CY">Cyprus</option>
+								<option value="CZ">Czech Republic</option>
+								<option value="DK">Denmark</option>
+								<option value="DJ">Djibouti</option>
+								<option value="DM">Dominica</option>
+								<option value="DO">Dominican Republic</option>
+								<option value="EC">Ecuador</option>
+								<option value="EG">Egypt</option>
+								<option value="SV">El Salvador</option>
+								<option value="GQ">Equatorial Guinea</option>
+								<option value="ER">Eritrea</option>
+								<option value="EE">Estonia</option>
+								<option value="ET">Ethiopia</option>
+								<option value="FK">Falkland Islands (Malvinas)</option>
+								<option value="FO">Faroe Islands</option>
+								<option value="FJ">Fiji</option>
+								<option value="FI">Finland</option>
+								<option value="FR">France</option>
+								<option value="GF">French Guiana</option>
+								<option value="PF">French Polynesia</option>
+								<option value="TF">French Southern Territories</option>
+								<option value="GA">Gabon</option>
+								<option value="GM">Gambia</option>
+								<option value="GE">Georgia</option>
+								<option value="DE">Germany</option>
+								<option value="GH">Ghana</option>
+								<option value="GI">Gibraltar</option>
+								<option value="GR">Greece</option>
+								<option value="GL">Greenland</option>
+								<option value="GD">Grenada</option>
+								<option value="GP">Guadeloupe</option>
+								<option value="GU">Guam</option>
+								<option value="GT">Guatemala</option>
+								<option value="GG">Guernsey</option>
+								<option value="GN">Guinea</option>
+								<option value="GW">Guinea-Bissau</option>
+								<option value="GY">Guyana</option>
+								<option value="HT">Haiti</option>
+								<option value="HM">Heard Island and Mcdonald Islands</option>
+								<option value="VA">Holy See (Vatican City State)</option>
+								<option value="HN">Honduras</option>
+								<option value="HK">Hong Kong</option>
+								<option value="HU">Hungary</option>
+								<option value="IS">Iceland</option>
+								<option value="IN">India</option>
+								<option value="ID">Indonesia</option>
+								<option value="IR">Iran, Islamic Republic of</option>
+								<option value="IQ">Iraq</option>
+								<option value="IE">Ireland</option>
+								<option value="IM">Isle of Man</option>
+								<option value="IL">Israel</option>
+								<option value="IT">Italy</option>
+								<option value="JM">Jamaica</option>
+								<option value="JP">Japan</option>
+								<option value="JE">Jersey</option>
+								<option value="JO">Jordan</option>
+								<option value="KZ">Kazakhstan</option>
+								<option value="KE">Kenya</option>
+								<option value="KI">Kiribati</option>
+								<option value="KP">Korea, Democratic People's Republic of</option>
+								<option value="KR">Korea, Republic of</option>
+								<option value="XK">Kosovo</option>
+								<option value="KW">Kuwait</option>
+								<option value="KG">Kyrgyzstan</option>
+								<option value="LA">Lao People's Democratic Republic</option>
+								<option value="LV">Latvia</option>
+								<option value="LB">Lebanon</option>
+								<option value="LS">Lesotho</option>
+								<option value="LR">Liberia</option>
+								<option value="LY">Libyan Arab Jamahiriya</option>
+								<option value="LI">Liechtenstein</option>
+								<option value="LT">Lithuania</option>
+								<option value="LU">Luxembourg</option>
+								<option value="MO">Macao</option>
+								<option value="MK">Macedonia, the Former Yugoslav Republic of</option>
+								<option value="MG">Madagascar</option>
+								<option value="MW">Malawi</option>
+								<option value="MY">Malaysia</option>
+								<option value="MV">Maldives</option>
+								<option value="ML">Mali</option>
+								<option value="MT">Malta</option>
+								<option value="MH">Marshall Islands</option>
+								<option value="MQ">Martinique</option>
+								<option value="MR">Mauritania</option>
+								<option value="MU">Mauritius</option>
+								<option value="YT">Mayotte</option>
+								<option value="MX">Mexico</option>
+								<option value="FM">Micronesia, Federated States of</option>
+								<option value="MD">Moldova, Republic of</option>
+								<option value="MC">Monaco</option>
+								<option value="MN">Mongolia</option>
+								<option value="ME">Montenegro</option>
+								<option value="MS">Montserrat</option>
+								<option value="MA">Morocco</option>
+								<option value="MZ">Mozambique</option>
+								<option value="MM">Myanmar</option>
+								<option value="NA">Namibia</option>
+								<option value="NR">Nauru</option>
+								<option value="NP">Nepal</option>
+								<option value="NL">Netherlands</option>
+								<option value="AN">Netherlands Antilles</option>
+								<option value="NC">New Caledonia</option>
+								<option value="NZ">New Zealand</option>
+								<option value="NI">Nicaragua</option>
+								<option value="NE">Niger</option>
+								<option value="NG">Nigeria</option>
+								<option value="NU">Niue</option>
+								<option value="NF">Norfolk Island</option>
+								<option value="MP">Northern Mariana Islands</option>
+								<option value="NO">Norway</option>
+								<option value="OM">Oman</option>
+								<option value="PK">Pakistan</option>
+								<option value="PW">Palau</option>
+								<option value="PS">Palestinian Territory, Occupied</option>
+								<option value="PA">Panama</option>
+								<option value="PG">Papua New Guinea</option>
+								<option value="PY">Paraguay</option>
+								<option value="PE">Peru</option>
+								<option value="PH">Philippines</option>
+								<option value="PN">Pitcairn</option>
+								<option value="PL">Poland</option>
+								<option value="PT">Portugal</option>
+								<option value="PR">Puerto Rico</option>
+								<option value="QA">Qatar</option>
+								<option value="RE">Reunion</option>
+								<option value="RO">Romania</option>
+								<option value="RU">Russian Federation</option>
+								<option value="RW">Rwanda</option>
+								<option value="BL">Saint Barthelemy</option>
+								<option value="SH">Saint Helena</option>
+								<option value="KN">Saint Kitts and Nevis</option>
+								<option value="LC">Saint Lucia</option>
+								<option value="MF">Saint Martin</option>
+								<option value="PM">Saint Pierre and Miquelon</option>
+								<option value="VC">Saint Vincent and the Grenadines</option>
+								<option value="WS">Samoa</option>
+								<option value="SM">San Marino</option>
+								<option value="ST">Sao Tome and Principe</option>
+								<option value="SA">Saudi Arabia</option>
+								<option value="SN">Senegal</option>
+								<option value="RS">Serbia</option>
+								<option value="CS">Serbia and Montenegro</option>
+								<option value="SC">Seychelles</option>
+								<option value="SL">Sierra Leone</option>
+								<option value="SG">Singapore</option>
+								<option value="SX">Sint Maarten</option>
+								<option value="SK">Slovakia</option>
+								<option value="SI">Slovenia</option>
+								<option value="SB">Solomon Islands</option>
+								<option value="SO">Somalia</option>
+								<option value="ZA">South Africa</option>
+								<option value="GS">South Georgia and the South Sandwich Islands</option>
+								<option value="SS">South Sudan</option>
+								<option value="ES">Spain</option>
+								<option value="LK">Sri Lanka</option>
+								<option value="SD">Sudan</option>
+								<option value="SR">Suriname</option>
+								<option value="SJ">Svalbard and Jan Mayen</option>
+								<option value="SZ">Swaziland</option>
+								<option value="SE">Sweden</option>
+								<option value="CH">Switzerland</option>
+								<option value="SY">Syrian Arab Republic</option>
+								<option value="TW">Taiwan, Province of China</option>
+								<option value="TJ">Tajikistan</option>
+								<option value="TZ">Tanzania, United Republic of</option>
+								<option value="TH">Thailand</option>
+								<option value="TL">Timor-Leste</option>
+								<option value="TG">Togo</option>
+								<option value="TK">Tokelau</option>
+								<option value="TO">Tonga</option>
+								<option value="TT">Trinidad and Tobago</option>
+								<option value="TN">Tunisia</option>
+								<option value="TR">Turkey</option>
+								<option value="TM">Turkmenistan</option>
+								<option value="TC">Turks and Caicos Islands</option>
+								<option value="TV">Tuvalu</option>
+								<option value="UG">Uganda</option>
+								<option value="UA">Ukraine</option>
+								<option value="AE">United Arab Emirates</option>
+								<option value="GB">United Kingdom</option>
+								<option value="US" selected="">United States</option>
+								<option value="UM">United States Minor Outlying Islands</option>
+								<option value="UY">Uruguay</option>
+								<option value="UZ">Uzbekistan</option>
+								<option value="VU">Vanuatu</option>
+								<option value="VE">Venezuela</option>
+								<option value="VN">Viet Nam</option>
+								<option value="VG">Virgin Islands, British</option>
+								<option value="VI">Virgin Islands, U.s.</option>
+								<option value="WF">Wallis and Futuna</option>
+								<option value="EH">Western Sahara</option>
+								<option value="YE">Yemen</option>
+								<option value="ZM">Zambia</option>
+								<option value="ZW">Zimbabwe</option>
+							</select>
+						</li>
+					</ol>
+				</fieldset>
+				<input class="left cancelbutton" type="button" value="Cancel">
+				<input type="submit" id="button-pay" value="Finish" class="right complete">
+				
+			</div>
+			<div class="left_column" id="ACH_D" style="display:none">
+			<h1>ACH Details</h1>
+				<div id="required_field_explanation">
+					<span id="required_field_char"> * </span> Required field
+				</div>
+				<fieldset>
+					<ol>
+						<li>
+							<label for="accountType">Account Type*</label>
+							<select name="accountType" id="accountType" size="Number_of_options">  								
+								<option value="checking" selected="">Checking</option>
+								<option value="saving">Savings</option>
+							</select>
+						</li>
+					</ol>
+				</fieldset>
+				<fieldset>
+					<ol>
+						<li>
+							<label for="ownershipType">Ownership Type*</label>
+							<select name="ownershipType" id="ownershipType" size="Number_of_options">  								
+								<option value="personal" selected="">Person</option>
+								<option value="business">Business</option>
+							</select>
+						</li>
+					</ol>
+				</fieldset>
+				<fieldset>
+					<ol>
+						<li>
+							<label for="businessName">Account Name*</label>
+							<input type="text" name="businessName" id="businessName" aria-required="true" class="" placeholder="Account Name">
+						</li>
+					</ol>
+				</fieldset>
+				<fieldset>
+					<ol>
+						<li>
+							<label for="routing-number">Routing Number*</label>
+							<input type="text" name="routingNumber" id="routingNumber" aria-required="true" class="" placeholder="011000015">
+						</li>
+					</ol>
+				</fieldset>
+				<fieldset>
+					<ol>
+						<li>
+							<label for="account-Number">Account Number*</label>
+							<input type="text" name="accountNumber" id="accountNumber" aria-required="true" class="" placeholder="1000000000">
+						</li>
+					</ol>
+				</fieldset>
+				<fieldset>
+					<ol>
+						<li>
+							<label for="billingAddress">Billing Address*:</label>
+						</li>
+					</ol>
+				</fieldset>
+				<fieldset>
+					<ol>
+						<li>
+							<label for="billingAddress">Address Line1*</label>
+							<input type="text" name="billingStAddress" id="billingStAddress" aria-required="true" class="" placeholder="Address Line1">
+						</li>
+					</ol>
+				</fieldset>
+				<fieldset>
+					<ol>
+						<li>
+							<label for="billingAddress">Address Line2</label>
+							<input type="text" name="billingExtAddress" id="billingExtAddress" aria-required="true" class="" placeholder="Address Line2">
+						</li>
+					</ol>
+				</fieldset>
+				<fieldset>
+					<ol>
+						<li>
+							<label for="billingAddress">City*</label>
+							<input type="text" name="billingLocality" id="billingLocality" aria-required="true" class="" placeholder="City">
+						</li>
+					</ol>
+				</fieldset>
+				<fieldset>
+					<ol>
+						<li>
+							<label for="billingAddress">State*</label>
+							<input type="text" name="billingRegion" id="billingRegion" aria-required="true" class="" placeholder="State">
+						</li>
+					</ol>
+				</fieldset>
+				<fieldset>
+					<ol>
+						<li>
+							<label for="billingAddress">Postal Code*</label>
+							<input type="text" name="billingPostalCode" id="billingPostalCode" aria-required="true" class="" placeholder="00000">
+						</li>
+					</ol>
+				</fieldset>
+				<fieldset>
+					<ol>
+						<li>
+							<label for="billingAddress">Country*</label>
+							<select name="billingAddressCountryCode" id="billingAddressCountryCode" size="Number_of_options">  								
+								<option value="US" selected="">United States</option>							
+							</select>
+						</li>
+					</ol>
+				</fieldset>
+				<fieldset>
+					<ol>
+						<li>
+							By clicking ["Finish"], I authorize Braintree, a service of PayPal, on behalf of Stratix Corporation (i) to verify my bank account information using bank information and consumer reports and (ii) to debit my bank account.
+						</li>
+					</ol>
+				</fieldset>
+				<input type="button" value="Finish" class="right complete">
+			</div>
+		</form>
+	</div>
+<br>
+
+<script>
+	function dis1()
+	{
+		var selv='CC';
+		document.getElementById("PaymentMethod").value=selv;
+		if (selv=="ACH")
+		{
+			var y = document.getElementById("ACH_D");
+			y.style.display = "block";
+			var y1 = document.getElementById("payment_details");
+			y1.style.display = "none";
+			document.getElementById("ach_card").checked=true;dis();
+		}
+		else if(selv=="CC")
+		{
+			var x = document.getElementById("payment_details");
+			x.style.display = "block";
+			var x1 = document.getElementById("ACH_D");
+			x1.style.display = "none";
+			document.getElementById("c_card").checked=true;dis();
+		}else if(selv="CC_ACH")
+		{
+			var xx = document.getElementById("payment_details");
+			xx.style.display = "block";
+			var xx1 = document.getElementById("ACH_D");
+			xx1.style.display = "none";
+			document.getElementById("c_card").checked=true;dis();
+			var z = document.getElementById("cc_ach");
+			z.style.display = "block";
+		}
+		//dis();
+	}
+	function dis()
+{
+	var op=document.getElementsByName('opt');
+	var sl,authVal;
+	for(i = 0; i < op.length; i++) {
+                if(op[i].checked)
+                sl=op[i].value;
+            }
+		document.getElementById("PaymentMethod").value=sl;
+      var form = document.querySelector('#my-sample-form');
+      var submit;
+	  if(sl=="CC")
+	  {
+		  authVal=document.getElementById("tokenKey").value;
+		  submit= document.querySelector('input[type="submit"]');
+	  }else
+	  {
+		  authVal=document.getElementById("tokenKey").value;
+		  submit= document.querySelector('input[type="button"][value="Finish"]');
+	  }
+	 var envmnt='sandbox';
+	document.getElementById("pDebug").value='false';
+//var client = require('braintree-web/client');
+//var usBankAccount = require('braintree-web/us-bank-account');
+
+
+    braintree.client.create({
+	//right click - Inspect - view console to see any error in javascript.
+  authorization: authVal //'sandbox_9q7rq2qd_sp89zypk2xt3rq3n'
+}, function (clientErr, clientInstance) {
+   //alert('client.creeate');
+  if (clientErr) {
+    alert('client.creeate.error');
+    console.error('There was an error creating the Client.');
+    throw clientErr;
+  }
+   var optn=document.getElementsByName('opt');
+	var seln;
+	for(i = 0; i < optn.length; i++) {
+                if(optn[i].checked)
+                seln=optn[i].value;
+            }
+			document.getElementById("PaymentMethod").value=seln;
+	if (seln=="ACH")
+	{
+		var y = document.getElementById("ACH_D");
+		y.style.display = "block";
+		var y1 = document.getElementById("payment_details");
+		y1.style.display = "none";	
+  braintree.usBankAccount.create({
+		  client: clientInstance
+  }, function (usBankAccountErr, usBankAccountInstance) {
+    //.. 
+	     if (usBankAccountErr) {
+            //console.error(hostedFieldsErr);
+			alert('usBankAccountErr');
+			alert(usBankAccountErr);
+            return;
+          }
+
+	//alert('usbankacct.create0');
+  var routingNumberInput =document.getElementById('routingNumber');
+var accountNumberInput = document.getElementById('accountNumber');
+var accountTypeInput = document.getElementById('accountType');
+var ownershipTypeInput = document.getElementById('ownershipType');
+//var firstNameInput = document.getElementById('fstName');
+//var lastNameInput = document.getElementById('lstName');
+var businessNameInput = document.getElementById('businessName');
+var billingAddressStreetInput = document.getElementById('billingStAddress');
+var billingAddressExtendedInput = document.getElementById('billingExtAddress');
+var billingAddressLocalityInput = document.getElementById('billingLocality');
+var billingAddressRegionSelect = document.getElementById('billingRegion');
+var billingAddressPostalInput = document.getElementById('billingPostalCode');
+var billingAddressCountryCodeInput = document.getElementById('billingAddressCountryCode');
+    //alert('usbankacct.create1');
+	
+submit.addEventListener('click', function (event) {
+  //alert('usbankacct.create.submit0');
+  document.getElementById('pgLoader').style.visibility="visible";
+  var bankDetails = {
+    routingNumber: routingNumberInput.value,
+    accountNumber: accountNumberInput.value,
+    accountType: accountTypeInput.value,
+    ownershipType: ownershipTypeInput.value,
+    billingAddress: {
+      streetAddress: billingAddressStreetInput.value,
+      extendedAddress: billingAddressExtendedInput.value,
+      locality: billingAddressLocalityInput.value,
+      region: billingAddressRegionSelect.value,
+      postalCode: billingAddressPostalInput.value
+    }
+	/*routingNumber: '011000015',
+    accountNumber: '1000000000',
+    accountType: 'checking',
+    ownershipType: 'personal',
+    billingAddress: {
+						streetAddress: '123 Street',
+						extendedAddress: 'Unit 1',
+						locality : 'Richardson',
+						region : 'TX',
+						postalCode : '75080'						
+				  }*/
+  };
+
+  //alert('usbankacct.create.owntype');
+  if (bankDetails.ownershipType === 'personal') {
+	  var nameVal=businessNameInput.value.split(" ");
+    bankDetails.firstName = nameVal[0];//firstNameInput.value;
+	if (nameVal.length>1)
+	{
+		bankDetails.lastName = nameVal[1];
+	}else
+	{
+		bankDetails.lastName=' ';
+	}
+	//bankDetails.firstName = 'firstName';
+    //bankDetails.lastName = 'lastName';
+  } else {
+    bankDetails.businessName = businessNameInput.value;
+	//bankDetails.businessName = 'businessName';
+  }
+
+	//alert('usbankacct.bankdetails'+JSON.stringify(bankDetails));
+  usBankAccountInstance.tokenize({
+    bankDetails: bankDetails,
+    mandateText: 'By clicking ["Finish"], I authorize Braintree, a service of PayPal, on behalf of Stratix Corporation (i) to verify my bank account information using bank information and consumer reports and (ii) to debit my bank account.'
+  }, function (tokenizeErr, tokenizedPayload) {
+     //alert('usbankacct.tokenize');
+     if (tokenizeErr) {document.getElementById('pgLoader').style.visibility="hidden";
+	   alert('TokenizeError: Required Field Missing.');
+	   alert(tokenizeErr);
+       //console.error('There was an error tokenizing the bank details.');
+       return;
+     }
+	 //alert('Got a nonce?');
+ 	// alert('Got a nonce tokenize: ' +tokenizedPayload.nonce + ' Got payload:' + JSON.stringify(tokenizedPayload));
+	 //alert('Nonce:'+tokenizedPayload.nonce);
+	 var nameValue=businessNameInput.value.split(" ");
+	document.getElementById("firstName").value=nameValue[0];
+	if (nameValue.length>1)
+	{
+		document.getElementById("lastName").value=nameValue[1];
+	}else
+	{
+		document.getElementById("lastName").value=' ';
+	}
+	var lastFourDigit=tokenizedPayload.description;
+	 document.getElementById("lastFour").value=lastFourDigit.substring(lastFourDigit.length-4, lastFourDigit.length);
+	 document.getElementById("nonce").value=tokenizedPayload.nonce;	 
+	 document.getElementById("state").value=billingAddressRegionSelect.value;
+	 document.getElementById("country").value=billingAddressCountryCodeInput.value;
+	 document.getElementById("zip").value=billingAddressPostalInput.value;
+	 document.getElementById("pDebug").value='false';
+	 retForm.submit();
+     // Send tokenizePayload.nonce to your server here!
+  });
+  //alert('usbankacct.tokenize completed');
+});
+  
+});
+
+	}else
+	{
+		var x = document.getElementById("payment_details");
+		x.style.display = "block";
+		var x1 = document.getElementById("ACH_D");
+		x1.style.display = "none";
+		
+		braintree.hostedFields.create({
+          client: clientInstance,
+          styles: {
+			//style all element
+            'input': {
+              'font-size': '10px',
+			  'color': '#3A3A3A'
+            },
+			//styling specific field say number
+			'.number': {
+			'font-family': 'monospace'
+			},
+			// Styling element state
+			':focus': {
+			  'color': 'blue'
+			},
+			'.valid': {
+			  'color': 'green'
+			},
+			'.invalid': {
+			  'color': 'red'
+			}
+            //'input.invalid': {
+            //  'color': 'red'
+            //},
+            //'input.valid': {
+            //  'color': 'green'
+            //}
+          },
+          fields: {
+            number: {
+              selector: '#card-number',
+              placeholder: '4111 1111 1111 1111',
+			  rejectUnsupportedCards: true
+
+            },
+            cvv: {
+              selector: '#cvv',
+              placeholder: '123'
+            },
+            expirationDate: {
+              selector: '#expiration-date',
+              placeholder: '12/29'
+			  //type: 'month'
+            }
+          }
+        }, function (hostedFieldsErr, hostedFieldsInstance) {
+          if (hostedFieldsErr) {
+            //console.error(hostedFieldsErr);
+			alert(hostedFieldsErr);
+            return;
+          }
+
+      submit.addEventListener('click', function (event) {
+      event.preventDefault();
+	  var cn=document.getElementById('card_name').value.trim();
+	  var psFlag='True';//postalcode not required. 
+	  var ps=document.getElementById('postal_code').value.trim();
+	  
+	  var addr='False';
+	  var cntcode=document.getElementById('country_code').value.trim();
+	  var addLine1='';
+	  if(addr!='False')
+	  {
+		addLine1=document.getElementById('addr_line1').value.trim();
+	  }
+	  if(cn!="" && cn!='null')
+		{
+          if(psFlag=='False' || (ps!="" && ps!='null'))
+			{
+				if(addr=='False' ||(addLine1!="" && addLine1!='null'))
+				{
+					if(addr=='False')
+					{
+						addLine1="";
+					}
+					document.getElementById('pgLoader').style.visibility="visible";
+					hostedFieldsInstance.tokenize({
+					  //we vault upon success of $1 transaction, so we know billing address is correct too.
+					  vault: false,
+					  cardholderName: cn,
+					  billingAddress: {
+							streetAddress: addLine1,
+							extendedAddress: '',
+							locality : '',
+							region : '',
+							postalCode : ps,
+							// valid country names and codes can be found here:
+							// https://developers.braintreepayments.com/reference/general/countries/ruby#list-of-countries
+							countryCodeAlpha2: cntcode
+					  }
+					},function (err, payload) 
+					{
+					if (err) 
+					{
+						alert(err);
+						console.error(err);
+						document.getElementById('pgLoader').style.visibility="hidden";
+						return;
+					}
+					else {
+					  // send the nonce to your server.
+					alert('Got a nonce tokenize: ' + payload.nonce + payload.details.cardType + payload.details.lastFour + ' Got payload:' + JSON.stringify(payload));
+					document.getElementById("paymentMethodIdInput").value = payload.nonce;//Srini fusion
+					createCustomer();
+					
+															
+				  }
+					// This is where you would submit payload.nonce to your server
+					document.getElementById("lastFour").value=payload.details.lastFour;
+					document.getElementById("type").value=payload.details.cardType;
+					document.getElementById("nonce").value=payload.nonce;
+					document.getElementById("cardHolderName").value=cn;
+					if(addr!='False')
+					{
+						document.getElementById("addr1").value=addLine1;
+					}
+					//retForm.submit(); //Srini: Fusion development.
+				  });
+				}else
+				{
+					alert("Please Enter Valid Address Line1.");
+				}
+			}else
+			{
+				alert("Please Enter Valid Postal Code.");
+			}
+		}else
+		{
+			alert("Please Enter Valid Card Holder Name.");
+		}
+    }, false);
+	
+	// Create a PayPal Checkout component.
+	  braintree.paypalCheckout.create({
+		client: clientInstance
+	  }, function (paypalCheckoutErr, paypalCheckoutInstance) {
+
+		// Stop if there was a problem creating PayPal Checkout.
+		// This could happen if there was a network error or if it's incorrectly
+		// configured.
+		if (paypalCheckoutErr) {
+		  //alert('Error creating PayPal Checkout:', paypalCheckoutErr);
+		  return;
+		}
+
+		// Set up PayPal with the checkout.js library
+		paypal.Button.render({
+		  env: envmnt, // or 'sandbox'
+
+		  //for checkout and not vault
+		//payment: function () {
+			//return paypalCheckoutInstance.createPayment({
+			  // Your PayPal options here. For available options, see
+			  // http://braintree.github.io/braintree-web/current/PayPalCheckout.html#createPayment
+			//});
+		  //},
+
+			//for vault flow
+		   payment: function () {	document.getElementById('pgLoader').style.visibility="visible";
+			return paypalCheckoutInstance.createPayment({
+			  flow: 'vault',
+			  billingAgreementDescription: 'Your agreement description',
+			  enableShippingAddress: true,
+			  shippingAddressEditable: false,
+			  //if above false, paypal say - this address is provided by agilcomm go to there site to update.
+			  shippingAddressOverride: {
+			   recipientName: 'Scruff McGruff',
+			   line1: '1234 Main St.',
+			   line2: 'Unit 1',
+			   city: 'Chicago',
+			   countryCode: 'US',
+			   postalCode: '60652',
+			   state: 'IL',
+			   phone: '123.456.7890'
+			  }
+			});
+		  },
+
+		  onAuthorize: function (data, actions) {
+			return paypalCheckoutInstance.tokenizePayment(data, function (err, payload) 
+			{
+				document.getElementById("type").value=payload.type;
+				document.getElementById("firstName").value=payload.details.firstName;
+				document.getElementById("lastName").value=payload.details.lastName;
+				document.getElementById("email").value=payload.details.email;
+				document.getElementById("nonce").value=payload.nonce;
+				document.getElementById("addr1").value=payload.details.billingAddress.line1;
+				document.getElementById("addr2").value=payload.details.billingAddress.line2;
+				document.getElementById("city").value=payload.details.billingAddress.city;
+				document.getElementById("state").value=payload.details.billingAddress.state;
+				document.getElementById("country").value=payload.details.billingAddress.countryCode;
+				document.getElementById("zip").value=payload.details.billingAddress.postalCode;
+				document.getElementById("pDebug").value='false';
+				retForm.submit();
+			});
+		  },
+
+		  onCancel: function (data) {
+		  document.getElementById('pgLoader').style.visibility="hidden";
+			  alert('payment cancelled'+ JSON.stringify(data, 0, 2));
+		  },
+
+		  onError: function (err) {
+		  document.getElementById('pgLoader').style.visibility="hidden";
+			  //alert('Error'+ err);
+
+		  }
+		}, '#paypal-button').then(function () {
+		  // The PayPal button will be rendered in an html element with the id
+		  // `paypal-button`. This function will be called when the PayPal button
+		  // is set up and ready to be used.
+			});
+
+		});
+     });
+		
+	}
+
+  });
+
+}
+    </script>
+	<div id="pgLoader" style="visibility:hidden" class="loader"></div>
+
+ <div class="modal" id="myModal">
+        <p><span id="modalMsg"></span></p>
+		<button onclick="closeModal()">Close</button>
+ </div>
+ 
+</body></html>
