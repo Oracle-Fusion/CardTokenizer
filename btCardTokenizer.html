@@ -426,13 +426,13 @@ display:none
                 const errorClass = errors && errors.extensions ? errors.extensions.errorClass : 'N/A'; // Extract 'errorClass' from extensions
 
                 // Display the parsed data in the UI
-                document.getElementById('paymentMethodId').textContent = paymentMethod ? paymentMethod.id : 'N/A';
+                document.getElementById('paymentMethodId').textContent = paymentMethod ? paymentMethod.legacyId : 'N/A';
                 document.getElementById('verificationStatus').textContent = verificationStatus || 'N/A';
                 document.getElementById('errorMessage').textContent = errorMessage;
                 document.getElementById('errorType').textContent = errorType;
                 document.getElementById('errorClass').textContent = errorClass;
 				
-				document.getElementById('paymentMethodID1').value = paymentMethod ? paymentMethod.id : 'N/A';
+				document.getElementById('paymentMethodID1').value = paymentMethod ? paymentMethod.legacyId : 'N/A';
 				//For failure - pass postalcode=l';l'l
                 if (verificationStatus === null || verificationStatus === undefined) {
 				  document.getElementById('statusCode').value = 'Error';
