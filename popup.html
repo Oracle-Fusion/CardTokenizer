@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Open Popup with Query Parameters</title>
+  <script>
+    function openPopupWithQueryParams() {
+      const baseUrl = 'https://google.com';
+      const params = new URLSearchParams({
+        param1: 'value1',
+        param2: 'value2'
+      });
+
+      const fullUrl = `${baseUrl}?${params.toString()}`;
+      window.open(fullUrl, 'popupWindow', 'width=600,height=400');
+    }
+  </script>
+</head>
+<body>
+  <a href="#" onclick="openPopupWithQueryParams(); return false;">Open Popup with Query Params</a>
+</body>
+</html>
