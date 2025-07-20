@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Popup with Parameters</title>
+  <script>
+    function openPopupWithParams() {
+      const params = {
+        envSelect: "DEV",
+        receiptAcctNum: "104659",
+        instrPartyId: "100000114997066",
+        receiptSiteNum: "1533798",
+        tokenKey: "sandbox_9q7rq2qd_sp89zypk2xt3rq3n",
+        receiptAPIURL: "",
+        sessId: "000000388085|6666126a00000066b0671",
+        receiptMethod: "US HACH Credit Card-Auto",
+        receiptBU: "US HACH BU",
+        receiptAmt: "0",
+        receiptCurrency: "USD",
+        receipBank: "8765602385"
+      };
+
+      const queryString = new URLSearchParams(params).toString();
+      const url = `https://oracle-fusion.ddns.net/btCardTokenizer.html?${queryString}`;
+
+      const width = 800;
+      const height = 600;
+      const left = (window.screen.width / 2) - (width / 2);
+      const top = (window.screen.height / 2) - (height / 2);
+
+      window.open(
+        url,
+        "_blank",
+        `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes`
+      );
+    }
+  </script>
+</head>
+<body style="font-family: sans-serif; padding: 20px;">
+
+  <p>
+    This page will not allow creating new token, please click
+    <a href="javascript:void(0);" onclick="openPopupWithParams()" style="color: blue; text-decoration: underline;">
+      Create Card Token
+    </a>.
+  </p>
+
+</body>
+</html>
