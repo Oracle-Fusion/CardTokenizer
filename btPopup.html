@@ -2,6 +2,18 @@
 <html>
 <head>
   <title>Popup with Parameters</title>
+  <style>
+    /* Remove default margin/padding */
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+
+    body {
+      padding: 20px; /* Keep internal padding only */
+    }
+  </style>
   <script>
     function openPopupWithParams() {
       const params = {
@@ -35,7 +47,7 @@
     }
   </script>
 </head>
-<body style="font-family: sans-serif; padding: 20px;">
+<body>
 
   <p>
     Please select + sign to add existing token to this site. If you would like to create new token, please click 
